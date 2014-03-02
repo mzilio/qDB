@@ -2,7 +2,6 @@
 #define CONTAINER_H
 #include <iostream>
 using std::ostream;
-using std::cout;
 
 template <class K> class Item;
 
@@ -108,18 +107,20 @@ template <class K>
 Item<K>* Container<K>::DeleteItem(const K& obj) {
 	Item<K>* x, *y;
 	Item<K>* del=FindItem(obj);
-	if (!del->sx || !del->dx) y=del;
-	else y=Successor(del);
-	if (y->sx != 0) x=y->sx;
-	else x=y->dx;
-	if (x) x->pred=y->pred;
-	if (!y->pred) radice=x;
-	else {
-		if (y==(y->pred)->sx) (y->pred)->sx=x;
-		else (y->pred)->dx=x;
+	if (del) {
+		if (!del->sx || !del->dx) y=del;
+		else y=Successor(del);
+		if (y->sx != 0) x=y->sx;
+		else x=y->dx;
+		if (x) x->pred=y->pred;
+		if (!y->pred) radice=x;
+		else {
+			if (y==(y->pred)->sx) (y->pred)->sx=x;
+			else (y->pred)->dx=x;
+		}
+		if (y!=del) del->info=y->info;
+		return y;
 	}
-	if (y!=del) del->info=y->info;
-	return y;
 }
 
 // ***********************************
