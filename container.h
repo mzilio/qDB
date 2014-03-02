@@ -28,11 +28,12 @@ private:
 	Item<K>* radice;
 	static Item<K>* Minimum(Item<K>*);
 	static Item<K>* Maximum(Item<K>*);
-	static Item<K>* Successor(Item<K>*);
 public:
 	Container();
 	Item<K>* Minimum() const;
 	Item<K>* Maximum() const;
+	static Item<K>* Successor(Item<K>*);
+	static Item<K>* Predecessor(Item<K>*);
 	void AddItem(const K&);
 	Item<K>* FindItem(const K&) const;
 	Item<K>* DeleteItem(const K&);
@@ -57,6 +58,16 @@ Item<K>* Container<K>::Maximum(Item<K>* x) {
 }
 
 template <class K>
+Item<K>* Container<K>::Minimum() const {
+	return Minimum(radice);
+}
+
+template <class K>
+Item<K>* Container<K>::Maximum() const {
+	return Maximum(radice);
+}
+
+template <class K>
 Item<K>* Container<K>::Successor(Item<K>* x) {
 	if (x->dx) return Minimum(x->dx);
 	Item<K>* y = x->pred;
@@ -68,13 +79,14 @@ Item<K>* Container<K>::Successor(Item<K>* x) {
 }
 
 template <class K>
-Item<K>* Container<K>::Minimum() const {
-	return Minimum(radice);
-}
-
-template <class K>
-Item<K>* Container<K>::Maximum() const {
-	return Maximum(radice);
+Item<K>* Container<K>::Predecessor(Item<K>* x) {
+	if (x->sx) return Maximum(x->sx);
+	Item<K>* y = x->pred;
+	while (y && x==y->sx) {
+		x=y;
+		y=y->pred;
+	}
+	return y;
 }
 
 template <class K>
