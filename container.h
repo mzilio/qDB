@@ -54,9 +54,6 @@ Item<K>::~Item() {
 	if (dx) delete dx;
 }
 
-// ***********************************
-//            DA DEFINIRE!
-// ***********************************
 template <class K>
 Item<K>* Container<K>::copy(Item<K>* x, Item<K>* p) {
 	if (!x) return 0;
@@ -207,4 +204,3 @@ ostream& operator<<(ostream& os, const Container<K>& x) {
 }
 #endif
 // modifica
-// gestione copie profonde, ridefinire: costruttore di copia, assegnazione e distruttore
