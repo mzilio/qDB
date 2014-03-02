@@ -19,6 +19,7 @@ private:
 	K info;
 	Item *sx, *dx, *pred;
 	Item(const K& =0, Item* =0, Item* =0, Item* =0);
+	~Item();
 };
 
 template <class K>
@@ -26,10 +27,15 @@ class Container {
 	friend ostream& operator<< <K>(ostream&, const Container<K>&);
 private:
 	Item<K>* radice;
+	static Item<K>* copy(Item<K>*, Item<K>* =0);
+	static void destroy(Item<K>*);
 	static Item<K>* Minimum(Item<K>*);
 	static Item<K>* Maximum(Item<K>*);
 public:
 	Container();
+	Container(const Container<K>&);
+	~Container();
+	Container<K>& operator=(const Container<K>&);
 	Item<K>* Minimum() const;
 	Item<K>* Maximum() const;
 	static Item<K>* Successor(Item<K>*);
@@ -43,7 +49,33 @@ template <class K>
 Item<K>::Item(const K& x, Item* s, Item* d, Item* p): info(x), sx(s), dx(d), pred(p) {}
 
 template <class K>
-Container<K>::Container(): radice(0) {}
+Item<K>::~Item() {
+	if (sx) delete sx;
+	if (dx) delete dx;
+}
+
+// ***********************************
+//            DA DEFINIRE!
+// ***********************************
+template <class K>
+Item<K>* Container<K>::copy(Item<K>* x, Item<K>* p) {
+	if (!x) return 0;
+	else {
+		Item<K>* q=new Item<K>(x->info,0,0,p);
+		q->sx=copy(x->sx,q);
+		q->dx=copy(x->dx,q);
+		return q;
+	}
+}
+
+template <class K>
+void Container<K>::destroy(Item<K>* x) {
+	if (x) {
+		destroy(x->sx);
+		destroy(x->dx);
+		delete x;
+	}
+}
 
 template <class K>
 Item<K>* Container<K>::Minimum(Item<K>* x) {
@@ -55,6 +87,26 @@ template <class K>
 Item<K>* Container<K>::Maximum(Item<K>* x) {
 	while (x->dx) x=x->dx;
 	return x;
+}
+
+template <class K>
+Container<K>::Container(): radice(0) {}
+
+template <class K>
+Container<K>::Container(const Container<K>& x): radice(copy(x.radice)) {}
+
+template <class K>
+Container<K>::~Container() {
+	if (radice) delete radice;
+}
+
+template <class K>
+Container<K>& Container<K>::operator=(const Container<K>& x) {
+	if (this!=&x) {
+		destroy(radice);
+		radice=copy(x.radice);
+	}
+	return *this;
 }
 
 template <class K>
@@ -115,6 +167,9 @@ Item<K>* Container<K>::FindItem(const K& obj) const {
 	return it;
 }
 
+// ***********************************
+//      TIPO DI RITORNO COERENTE?
+// ***********************************
 template <class K>
 Item<K>* Container<K>::DeleteItem(const K& obj) {
 	Item<K>* x, *y;
@@ -152,3 +207,4 @@ ostream& operator<<(ostream& os, const Container<K>& x) {
 }
 #endif
 // modifica
+// gestione copie profonde, ridefinire: costruttore di copia, assegnazione e distruttore
