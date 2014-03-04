@@ -42,7 +42,7 @@ public:
 	static Item<K>* Predecessor(Item<K>*);
 	void AddItem(const K&);
 	Item<K>* FindItem(const K&) const;
-	Item<K>* DeleteItem(const K&);
+	Item<K>* RemoveItem(const K&);
 };
 
 template <class K>
@@ -168,7 +168,7 @@ Item<K>* Container<K>::FindItem(const K& obj) const {
 //      TIPO DI RITORNO COERENTE?
 // ***********************************
 template <class K>
-Item<K>* Container<K>::DeleteItem(const K& obj) {
+Item<K>* Container<K>::RemoveItem(const K& obj) {
 	Item<K>* x, *y;
 	Item<K>* del=FindItem(obj);
 	if (del) {
@@ -204,3 +204,6 @@ ostream& operator<<(ostream& os, const Container<K>& x) {
 }
 #endif
 // modifica
+// in container -> implementare metodo int size() che ritorna il valore di una variabile statica che conta gli oggetti aggiunti e tolti..
+// in container -> implementare metodo bool empty()..c.size==0
+// in container -> implementare bool operator== che ritorna true se b.size()==c.size() e se ogni elemento di b è uguale al corrispondente elemento di c
