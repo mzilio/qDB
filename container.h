@@ -9,6 +9,7 @@ template <class K> ostream& operator<<(ostream&, const Container<K>&);
 
 template <class K>
 class Container {
+	friend class Iterator;
 	friend ostream& operator<< <K>(ostream&, const Container<K>&);
 private:
 	class Item {
@@ -24,6 +25,14 @@ private:
 	static Item* Minimum(Item*);
 	static Item* Maximum(Item*);
 public:
+	class Iterator {
+		friend class Container;
+		friend ostream& operator<< <K>(ostream&, const Container<K>&);
+	private:
+		Item* it;
+	public:
+		Iterator& operator++();
+	};
 	Container();
 	Container(const Container<K>&);
 	~Container();
@@ -76,6 +85,12 @@ template <class K>
 typename Container<K>::Item* Container<K>::Maximum(typename Container<K>::Item* x) {
 	while (x->dx) x=x->dx;
 	return x;
+}
+
+template <class K>
+typename Container<K>::Iterator& Container<K>::Iterator::operator++() {
+	if (it) it=Successor(it);
+	return *this;
 }
 
 template <class K>
@@ -181,9 +196,12 @@ typename Container<K>::Item* Container<K>::RemoveItem(const K& obj) {
 
 template <class K>
 ostream& operator<<(ostream& os, const Container<K>& x) {
-	// DA IMPLEMENTARE CON ITERATORI
-	/*if (!x.radice) os << '@';
-	else os << x.radice->info << '(' << x.radice->sx << ',' << x.radice->dx << ')';*/
+	typename Container<K>::Iterator q;
+	q.it=x.Minimum();
+	while (q.it) {
+		os << q.it->info;
+		++q;
+	}
 	return os;
 }
 #endif
