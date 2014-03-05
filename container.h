@@ -27,6 +27,7 @@ class Container {
 	friend ostream& operator<< <K>(ostream&, const Container<K>&);
 private:
 	Item<K>* radice;
+	int size;
 	static Item<K>* copy(Item<K>*, Item<K>* =0);
 	static void destroy(Item<K>*);
 	static Item<K>* Minimum(Item<K>*);
@@ -40,6 +41,8 @@ public:
 	Item<K>* Maximum() const;
 	static Item<K>* Successor(Item<K>*);
 	static Item<K>* Predecessor(Item<K>*);
+	int Size() const;
+	bool Empty() const;
 	void AddItem(const K&);
 	Item<K>* FindItem(const K&) const;
 	Item<K>* RemoveItem(const K&);
@@ -87,10 +90,10 @@ Item<K>* Container<K>::Maximum(Item<K>* x) {
 }
 
 template <class K>
-Container<K>::Container(): radice(0) {}
+Container<K>::Container(): radice(0), size(0) {}
 
 template <class K>
-Container<K>::Container(const Container<K>& x): radice(copy(x.radice)) {}
+Container<K>::Container(const Container<K>& x): radice(copy(x.radice)), size(x.size) {}
 
 template <class K>
 Container<K>::~Container() {
@@ -102,6 +105,7 @@ Container<K>& Container<K>::operator=(const Container<K>& x) {
 	if (this!=&x) {
 		destroy(radice);
 		radice=copy(x.radice);
+		size=x.size;
 	}
 	return *this;
 }
@@ -139,6 +143,16 @@ Item<K>* Container<K>::Predecessor(Item<K>* x) {
 }
 
 template <class K>
+int Container<K>::Size() const {
+	return size;
+}
+
+template <class K>
+bool Container<K>::Empty() const {
+	return size == 0;
+}
+
+template <class K>
 void Container<K>::AddItem(const K& obj) {
 	Item<K> *it=radice, *p=0;
 	while (it) {
@@ -152,6 +166,7 @@ void Container<K>::AddItem(const K& obj) {
 		if (obj < p->info) p->sx=newItem;
 		else p->dx=newItem;
 	}
+	size++;
 }
 
 template <class K>
@@ -183,6 +198,7 @@ Item<K>* Container<K>::RemoveItem(const K& obj) {
 			else (y->pred)->dx=x;
 		}
 		if (y!=del) del->info=y->info;
+		size--;
 		return y;
 	}
 }
@@ -204,6 +220,4 @@ ostream& operator<<(ostream& os, const Container<K>& x) {
 }
 #endif
 // modifica
-// in container -> implementare metodo int size() che ritorna il valore di una variabile statica che conta gli oggetti aggiunti e tolti..
-// in container -> implementare metodo bool empty()..c.size==0
 // in container -> implementare bool operator== che ritorna true se b.size()==c.size() e se ogni elemento di b è uguale al corrispondente elemento di c
