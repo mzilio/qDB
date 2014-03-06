@@ -31,19 +31,23 @@ public:
 	private:
 		Item* it;
 	public:
+		bool operator==(Iterator) const;
+		bool operator!=(Iterator) const;
 		Iterator& operator++();
+		operator bool() const;
 	};
 	Container();
 	Container(const Container<K>&);
 	~Container();
 	Container<K>& operator=(const Container<K>&);
-	Item* Minimum() const;
-	Item* Maximum() const;
-	static Item* Successor(Item*);
-	static Item* Predecessor(Item*);
+	Iterator Minimum() const;
+	Iterator Maximum() const;
+	static Iterator Successor(Iterator);
+	static Iterator Predecessor(Iterator);
 	void AddItem(const K&);
-	Item* FindItem(const K&) const;
-	Item* RemoveItem(const K&);
+	Iterator FindItem(const K&) const;
+	K RemoveItem(const K&);
+	K& operator[](Iterator) const;
 };
 
 template <class K>
@@ -88,9 +92,25 @@ typename Container<K>::Item* Container<K>::Maximum(typename Container<K>::Item* 
 }
 
 template <class K>
+bool Container<K>::Iterator::operator==(typename Container<K>::Iterator x) const {
+	return it==x.it;
+}
+
+template <class K>
+bool Container<K>::Iterator::operator!=(typename Container<K>::Iterator x) const {
+	return it!=x.it;
+}
+
+template <class K>
 typename Container<K>::Iterator& Container<K>::Iterator::operator++() {
-	if (it) it=Successor(it);
+	if (it) *this=Successor(*this);
 	return *this;
+}
+
+template <class K>
+Container<K>::Iterator::operator bool() const {
+	if (it) return true;
+	else return false;
 }
 
 template <class K>
@@ -114,35 +134,51 @@ Container<K>& Container<K>::operator=(const Container<K>& x) {
 }
 
 template <class K>
-typename Container<K>::Item* Container<K>::Minimum() const {
-	return Minimum(radice);
+typename Container<K>::Iterator Container<K>::Minimum() const {
+	Iterator p;
+	p.it=Minimum(radice);
+	return p;
 }
 
 template <class K>
-typename Container<K>::Item* Container<K>::Maximum() const {
-	return Maximum(radice);
+typename Container<K>::Iterator Container<K>::Maximum() const {
+	Iterator p;
+	p.it=Maximum(radice);
+	return p; 
 }
 
 template <class K>
-typename Container<K>::Item* Container<K>::Successor(typename Container<K>::Item* x) {
-	if (x->dx) return Minimum(x->dx);
-	typename Container<K>::Item* y = x->pred;
-	while (y && x==y->dx) {
-		x=y;
-		y=y->pred;
+typename Container<K>::Iterator Container<K>::Successor(typename Container<K>::Iterator x) {
+	if (x) {
+		typename Container<K>::Iterator y;
+		if (x.it->dx) {
+			y.it=Minimum(x.it->dx);
+			return y;
+		}
+		y.it=x.it->pred;
+		while (y && x.it==y.it->dx) {
+			x=y;
+			y.it=y.it->pred;
+		}
+		return y;
 	}
-	return y;
 }
 
 template <class K>
-typename Container<K>::Item* Container<K>::Predecessor(typename Container<K>::Item* x) {
-	if (x->sx) return Maximum(x->sx);
-	typename Container<K>::Item* y = x->pred;
-	while (y && x==y->sx) {
-		x=y;
-		y=y->pred;
+typename Container<K>::Iterator Container<K>::Predecessor(typename Container<K>::Iterator x) {
+	if (x) {
+		typename Container<K>::Iterator y;
+		if (x.it->sx) {
+			y.it=Maximum(x.it->sx);
+			return y;
+		}
+		y.it=x.it->pred;
+		while (y && x.it==y.it->sx) {
+			x=y;
+			y.it=y.it->pred;
+		}
+		return y;
 	}
-	return y;
 }
 
 template <class K>
@@ -162,42 +198,45 @@ void Container<K>::AddItem(const K& obj) {
 }
 
 template <class K>
-typename Container<K>::Item* Container<K>::FindItem(const K& obj) const {
-	typename Container<K>::Item* it=radice;
-	while (it && obj!=it->info) {
-		if (obj < it->info) it = it->sx;
-		else it = it->dx;
+typename Container<K>::Iterator Container<K>::FindItem(const K& obj) const {
+	typename Container<K>::Iterator p;
+	p.it=radice;
+	while (p && obj!=p.it->info) {
+		if (obj < p.it->info) p.it=p.it->sx;
+		else p.it=p.it->dx;
 	}
-	return it;
+	return p;
 }
 
-// ***********************************
-//      TIPO DI RITORNO COERENTE?
-// ***********************************
 template <class K>
-typename Container<K>::Item* Container<K>::RemoveItem(const K& obj) {
-	typename Container<K>::Item* x, *y;
-	typename Container<K>::Item* del=FindItem(obj);
+K Container<K>::RemoveItem(const K& obj) {
+	typename Container<K>::Iterator x, y, del;
+	del=FindItem(obj);
 	if (del) {
-		if (!del->sx || !del->dx) y=del;
+		if (!del.it->sx || !del.it->dx) y=del;
 		else y=Successor(del);
-		if (y->sx != 0) x=y->sx;
-		else x=y->dx;
-		if (x) x->pred=y->pred;
-		if (!y->pred) radice=x;
+		if (y.it->sx != 0) x.it=y.it->sx;
+		else x.it=y.it->dx;
+		if (x) x.it->pred=y.it->pred;
+		if (!y.it->pred) radice=x.it;
 		else {
-			if (y==(y->pred)->sx) (y->pred)->sx=x;
-			else (y->pred)->dx=x;
+			if (y.it==(y.it->pred)->sx) (y.it->pred)->sx=x.it;
+			else (y.it->pred)->dx=x.it;
 		}
-		if (y!=del) del->info=y->info;
-		return y;
+		if (y!=del) del.it->info=y.it->info;
+		return del.it->info;
 	}
+}
+
+template <class K>
+K& Container<K>::operator[](typename Container<K>::Iterator x) const {
+	if (x) return x.it->info;
 }
 
 template <class K>
 ostream& operator<<(ostream& os, const Container<K>& x) {
 	typename Container<K>::Iterator q;
-	q.it=x.Minimum();
+	q=x.Minimum();
 	while (q.it) {
 		os << q.it->info;
 		++q;
