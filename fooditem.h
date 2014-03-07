@@ -1,16 +1,15 @@
 #ifndef FOODITEM_H
 #define FOODITEM_H
 #include "marketitem.h"
+#include "date.h"
 
 class FoodItem : public MarketItem {
 private:
+	Date expirationDate;
 	static double vat;
 public:
-	FoodItem(string, string, double);
+	FoodItem(string, string, double, int, int, int);
 	~FoodItem();
 	double Price() const;
 };
 #endif
-/*
-	TODO come incapsulare il campo data di scadenza?
-*/
