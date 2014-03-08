@@ -5,27 +5,19 @@ using std::string;
 
 class MarketItem {
 private:
+	string ean;
 	string brand;
 	string productName;
 	double taxable;
-protected:
-	MarketItem(string, string, double);
-	virtual ~MarketItem();
+	bool discount;
 public:
+	MarketItem(string, string, string, double, bool);
+	virtual ~MarketItem();
 	virtual double Price() const = 0;
+	string GetEAN() const;
 	string GetBrand() const;
 	string GetProductName() const;
 	double GetTaxable() const;
+	bool IsDiscountable() const;
 };
 #endif
-/*
-iva diversa per categorie di prodotti
--normalmente 22%
--prodotti alimentari 10%
--prodotti alimentari prima necessità 4%
-
-diverse categorie di prodotti:
--alimentari (data di scadenza)
-	-da frigo (temperatura di conservazione)
--non alimentari (garanzia)
-*/
