@@ -18,3 +18,7 @@ double FoodItem::Price() const {
 Date FoodItem::GetExpirationDate() const {
 	return expirationDate;
 }
+
+double FoodItem::GetDiscountRate() const {
+	return discountRate;
+}

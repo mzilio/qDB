@@ -13,5 +13,6 @@ public:
 	~FoodItem();
 	double Price() const;
 	Date GetExpirationDate() const;
+	double GetDiscountRate() const;
 };
 #endif
