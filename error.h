@@ -9,5 +9,5 @@ private:
 public:
 	Error(string);
 	string getError() const;
-}
+};
 #endif

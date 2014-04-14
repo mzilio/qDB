@@ -1,26 +1,20 @@
-qDB : main.o marketitem.o generalitem.o fooditem.o fridgeitem.o stapleitem.o date.o
-	g++ -o qDB main.o marketitem.o generalitem.o fooditem.o fridgeitem.o stapleitem.o date.o
+qDB : main.o beneimmobile.o fabbricato.o terreno.o error.o
+	g++ -o qDB main.o beneimmobile.o fabbricato.o terreno.o error.o
 
-main.o : main.cpp container.h marketitem.h generalitem.h fooditem.h fridgeitem.h stapleitem.h
+main.o : main.cpp container.h beneimmobile.h fabbricato.h terreno.h error.h
 	g++ -c main.cpp -o main.o
 
-marketitem.o : marketitem.cpp marketitem.h
-	g++ -c marketitem.cpp -o marketitem.o
+beneimmobile.o : beneimmobile.cpp beneimmobile.h
+	g++ -c beneimmobile.cpp -o beneimmobile.o
 
-generalitem.o : generalitem.cpp generalitem.h marketitem.h
-	g++ -c generalitem.cpp -o generalitem.o
+fabbricato.o : fabbricato.cpp fabbricato.h beneimmobile.h error.h
+	g++ -c fabbricato.cpp -o fabbricato.o
 
-fooditem.o : fooditem.cpp fooditem.h marketitem.h date.h
-	g++ -c fooditem.cpp -o fooditem.o
+terreno.o : terreno.cpp terreno.h beneimmobile.h
+	g++ -c terreno.cpp -o terreno.o
 
-fridgeitem.o : fridgeitem.cpp fridgeitem.h fooditem.h
-	g++ -c fridgeitem.cpp -o fridgeitem.o
-
-stapleitem.o : stapleitem.cpp stapleitem.h fooditem.h
-	g++ -c stapleitem.cpp -o stapleitem.o
-
-date.o : date.cpp date.h
-	g++ -c date.cpp -o date.o
+error.o : error.cpp error.h
+	g++ -c error.cpp -o error.o
 
 clean :
 	rm *.o

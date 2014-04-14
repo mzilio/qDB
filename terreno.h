@@ -1,5 +1,6 @@
 #ifndef TERRENO_H
 #define TERRENO_H
+#include "beneimmobile.h"
 
 class Terreno : public BeneImmobile {
 public:

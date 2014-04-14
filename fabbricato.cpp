@@ -14,15 +14,17 @@ double Fabbricato::MoltiplicatoreDX = 60.0;
 
 double Fabbricato::MoltiplicatoreC1 = 55.0;
 
-Fabbricato::Fabbricato(double r, string c, bool p=false, bool s=false, bool i=false): BeneImmobile(r), CategoriaCatastale(c), PrimaCasa(p), Storico(s), Inagibile(i) {}
+Fabbricato::Fabbricato(double r, string c, bool p, bool s, bool i): BeneImmobile(r), CategoriaCatastale(c), PrimaCasa(p), Storico(s), Inagibile(i) {}
 
-double Fabbricato::calcoloImu() const throw Errore() {
+double Fabbricato::calcoloImu() const throw(Error) {
 	double Rendita=getRenditaCatastale();
 	if (Storico || Inagibile)
 		Rendita*=0.5;
 	double Incremento=(Rendita*Rivalutazione)/100.0;
 	Rendita+=Incremento;
-	if (CategoriaCatastale)
+	if (true)
+		Rendita*=MoltiplicatoreAX;
+	/*if (CategoriaCatastale)
 		Rendita*=MoltiplicatoreAX;
 	else if
 		Rendita*=MoltiplicatoreBX;
@@ -33,7 +35,7 @@ double Fabbricato::calcoloImu() const throw Errore() {
 	else if
 		Rendita*=MoltiplicatoreC1;
 	else
-		throw Error('Categoria catastale non riconosciuta!');
+		throw Error("Categoria catastale non riconosciuta!");*/
 	if (PrimaCasa)
 		return (Rendita*AliquotaAgevolata)/100.0;
 	else

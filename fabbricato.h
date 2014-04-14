@@ -1,5 +1,7 @@
 #ifndef FABBRICATO_H
 #define FABBRICATO_H
+#include "beneimmobile.h"
+#include "error.h"
 #include <string>
 using std::string;
 
@@ -15,7 +17,7 @@ public:
 	static double MoltiplicatoreA10D5;
 	static double MoltiplicatoreDX;
 	static double MoltiplicatoreC1;
-	Fabbricato(double, string, bool, bool, bool);
-	double calcoloImu() const;
+	Fabbricato(double, string, bool=false, bool=false, bool=false);
+	double calcoloImu() const throw(Error);
 };
 #endif
