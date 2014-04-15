@@ -14,7 +14,23 @@ double Fabbricato::MoltiplicatoreDX = 60.0;
 
 double Fabbricato::MoltiplicatoreC1 = 55.0;
 
-Fabbricato::Fabbricato(double r, string c, bool p, bool s, bool i): BeneImmobile(r), CategoriaCatastale(c), PrimaCasa(p), Storico(s), Inagibile(i) {}
+Fabbricato::Fabbricato(string p, double r, string c, bool pc, bool s, bool i): BeneImmobile(p,r), CategoriaCatastale(c), PrimaCasa(pc), Storico(s), Inagibile(i) {}
+
+bool Fabbricato::isPrimaCasa() const {
+	return PrimaCasa;
+}
+
+bool Fabbricato::isStorico() const {
+	return Storico;
+}
+
+bool Fabbricato::isInagibile() const {
+	return Inagibile;
+}
+
+string Fabbricato::getCategoriaCatastale() const{
+	return CategoriaCatastale;
+}
 
 double Fabbricato::calcoloImu() const throw(Error) {
 	double Rendita=getRenditaCatastale();
@@ -42,9 +58,6 @@ double Fabbricato::calcoloImu() const throw(Error) {
 		return (Rendita*AliquotaStandard)/100.0;
 }
 
-/*
-	TODO controllare come va dichiarato che un metodo può lanciare un eccezione
-*/
 /*
 	TODO capire come riconoscere le diverse categorie catastali
 */

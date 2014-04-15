@@ -6,7 +6,7 @@ class Terreno : public BeneImmobile {
 public:
 	static double Rivalutazione;
 	static double Moltiplicatore;
-	Terreno(double);
+	Terreno(string, double);
 	double calcoloImu() const;
 };
 #endif

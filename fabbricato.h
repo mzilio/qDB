@@ -17,7 +17,11 @@ public:
 	static double MoltiplicatoreA10D5;
 	static double MoltiplicatoreDX;
 	static double MoltiplicatoreC1;
-	Fabbricato(double, string, bool=false, bool=false, bool=false);
+	Fabbricato(string, double, string, bool=false, bool=false, bool=false);
+	bool isPrimaCasa() const;
+	bool isStorico() const;
+	bool isInagibile() const;
+	string getCategoriaCatastale() const;
 	double calcoloImu() const throw(Error);
 };
 #endif

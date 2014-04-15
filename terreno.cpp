@@ -4,7 +4,7 @@ double Terreno::Rivalutazione = 25.0;
 
 double Terreno::Moltiplicatore = 135.0;
 
-Terreno::Terreno(double r): BeneImmobile(r) {}
+Terreno::Terreno(string p, double r): BeneImmobile(p,r) {}
 
 double Terreno::calcoloImu() const {
 	double Rendita=getRenditaCatastale();
