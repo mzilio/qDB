@@ -6,7 +6,15 @@ BeneImmobile::BeneImmobile(string p, double r): Proprietario(p), RenditaCatastal
 
 BeneImmobile::~BeneImmobile() {}
 
-string BeneImmobile::getProprietario() const{
+bool BeneImmobile::operator==(const BeneImmobile& b) const {
+	return Proprietario==b.Proprietario && RenditaCatastale==b.RenditaCatastale;
+}
+
+bool BeneImmobile::operator<(const BeneImmobile& b) const {
+	return Proprietario<b.Proprietario && RenditaCatastale<b.RenditaCatastale;
+}
+
+string BeneImmobile::getProprietario() const {
 	return Proprietario;
 }
 

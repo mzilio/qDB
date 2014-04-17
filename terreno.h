@@ -7,6 +7,7 @@ public:
 	static double Rivalutazione;
 	static double Moltiplicatore;
 	Terreno(string, double);
+	Terreno* clone() const;
 	double calcoloImu() const;
 };
 #endif

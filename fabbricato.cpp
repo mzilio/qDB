@@ -16,6 +16,20 @@ double Fabbricato::MoltiplicatoreC1 = 55.0;
 
 Fabbricato::Fabbricato(string p, double r, string c, bool pc, bool s, bool i): BeneImmobile(p,r), CategoriaCatastale(c), PrimaCasa(pc), Storico(s), Inagibile(i) {}
 
+bool Fabbricato::operator==(const BeneImmobile& b) const {
+	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
+	return f && BeneImmobile::operator==(*f) && CategoriaCatastale==f->CategoriaCatastale;
+}
+
+bool Fabbricato::operator<(const BeneImmobile& b) const {
+	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
+	return f && BeneImmobile::operator<(*f) && CategoriaCatastale<f->CategoriaCatastale;
+}
+
+Fabbricato* Fabbricato::clone() const {
+	return new Fabbricato(*this);
+}
+
 bool Fabbricato::isPrimaCasa() const {
 	return PrimaCasa;
 }
@@ -38,26 +52,23 @@ double Fabbricato::calcoloImu() const throw(Error) {
 		Rendita*=0.5;
 	double Incremento=(Rendita*Rivalutazione)/100.0;
 	Rendita+=Incremento;
-	if (true)
+	if (CategoriaCatastale=="A1" || CategoriaCatastale=="A2" || CategoriaCatastale=="A3" || CategoriaCatastale=="A4" || CategoriaCatastale=="A5" || CategoriaCatastale=="A7" || CategoriaCatastale=="A8" || CategoriaCatastale=="A9" || CategoriaCatastale=="A11" || CategoriaCatastale=="C2" || CategoriaCatastale=="C6" || CategoriaCatastale=="C7")
 		Rendita*=MoltiplicatoreAX;
-	/*if (CategoriaCatastale)
-		Rendita*=MoltiplicatoreAX;
-	else if
+	else if (CategoriaCatastale=="B1" || CategoriaCatastale=="B2" || CategoriaCatastale=="B3" || CategoriaCatastale=="B4" || CategoriaCatastale=="B5" || CategoriaCatastale=="B6" || CategoriaCatastale=="B7" || CategoriaCatastale=="B8" || CategoriaCatastale=="C3" || CategoriaCatastale=="C4" || CategoriaCatastale=="C5")
 		Rendita*=MoltiplicatoreBX;
-	else if
+	else if  (CategoriaCatastale=="A10" || CategoriaCatastale=="D5")
 		Rendita*=MoltiplicatoreA10D5;
-	else if
+	else if (CategoriaCatastale=="D1" || CategoriaCatastale=="D2" || CategoriaCatastale=="D3" || CategoriaCatastale=="D4" || CategoriaCatastale=="D6" || CategoriaCatastale=="D7" || CategoriaCatastale=="D8" || CategoriaCatastale=="D9" || CategoriaCatastale=="D10")
 		Rendita*=MoltiplicatoreDX;
-	else if
+	else if (CategoriaCatastale=="C1")
 		Rendita*=MoltiplicatoreC1;
 	else
-		throw Error("Categoria catastale non riconosciuta!");*/
+		throw Error("Categoria catastale non riconosciuta!");
 	if (PrimaCasa)
 		return (Rendita*AliquotaAgevolata)/100.0;
 	else
 		return (Rendita*AliquotaStandard)/100.0;
 }
-
 /*
-	TODO capire come riconoscere le diverse categorie catastali
+	TODO capire come fare controllo di coerenza su categoria catastale all'interno del costruttore
 */
