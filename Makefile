@@ -1,7 +1,7 @@
-qDB : main.o beneimmobile.o fabbricato.o terreno.o error.o
-	g++ -o qDB main.o beneimmobile.o fabbricato.o terreno.o error.o
+qDB : main.o beneimmobile.o fabbricato.o terreno.o error.o record.o
+	g++ -o qDB main.o beneimmobile.o fabbricato.o terreno.o error.o record.o
 
-main.o : main.cpp container.h beneimmobile.h fabbricato.h terreno.h error.h
+main.o : main.cpp container.h beneimmobile.h fabbricato.h terreno.h error.h record.h
 	g++ -c main.cpp -o main.o
 
 beneimmobile.o : beneimmobile.cpp beneimmobile.h
@@ -15,6 +15,9 @@ terreno.o : terreno.cpp terreno.h beneimmobile.h
 
 error.o : error.cpp error.h
 	g++ -c error.cpp -o error.o
+
+record.o : record.cpp record.h
+	g++ -c record.cpp -o record.o
 
 clean :
 	rm *.o
