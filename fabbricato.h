@@ -7,8 +7,8 @@ using std::string;
 
 class Fabbricato : public BeneImmobile {
 private:
+    string CategoriaCatastale;
 	bool PrimaCasa, Storico, Inagibile;
-	string CategoriaCatastale;
 public:
 	static double AliquotaAgevolata;
 	static double Rivalutazione;
