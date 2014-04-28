@@ -17,9 +17,9 @@ public:
 	static double MoltiplicatoreA10D5;
 	static double MoltiplicatoreDX;
 	static double MoltiplicatoreC1;
-	Fabbricato(string, double, string, bool=false, bool=false, bool=false);
-	bool operator==(const BeneImmobile&) const;
-	bool operator<(const BeneImmobile&) const;
+	Fabbricato(string, int, int, string, double, string, bool=false, bool=false, bool=false);
+	//bool operator==(const BeneImmobile&) const;
+	//bool operator<(const BeneImmobile&) const;
 	Fabbricato* clone() const;
 	bool isPrimaCasa() const;
 	bool isStorico() const;

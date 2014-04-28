@@ -2,16 +2,22 @@
 
 double BeneImmobile::AliquotaStandard = 0.76;
 
-BeneImmobile::BeneImmobile(string p, double r): Proprietario(p), RenditaCatastale(r) {}
+BeneImmobile::BeneImmobile(string c, int f, int pa, string pr, double r): id(c,f,pa), Proprietario(pr), RenditaCatastale(r) {}
 
 BeneImmobile::~BeneImmobile() {}
 
 bool BeneImmobile::operator==(const BeneImmobile& b) const {
-	return Proprietario==b.Proprietario && RenditaCatastale==b.RenditaCatastale;
+	return id==b.id;
+	//return id==b.id && Proprietario==b.Proprietario && RenditaCatastale==b.RenditaCatastale;
 }
 
 bool BeneImmobile::operator<(const BeneImmobile& b) const {
-	return Proprietario<b.Proprietario && RenditaCatastale<b.RenditaCatastale;
+	return id<b.id;
+	//return id<b.id && Proprietario<b.Proprietario && RenditaCatastale<b.RenditaCatastale;
+}
+
+IdentificativoCatastale BeneImmobile::getIdentificativoCatastale() const {
+	return id;
 }
 
 string BeneImmobile::getProprietario() const {

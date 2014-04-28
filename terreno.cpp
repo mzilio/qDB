@@ -4,7 +4,7 @@ double Terreno::Rivalutazione = 25.0;
 
 double Terreno::Moltiplicatore = 135.0;
 
-Terreno::Terreno(string p, double r): BeneImmobile(p,r) {}
+Terreno::Terreno(string c, int f, int pa, string pr, double r): BeneImmobile(c,f,pa,pr,r) {}
 
 Terreno* Terreno::clone() const {
 	return new Terreno(*this);

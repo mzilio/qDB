@@ -14,17 +14,19 @@ double Fabbricato::MoltiplicatoreDX = 60.0;
 
 double Fabbricato::MoltiplicatoreC1 = 55.0;
 
-Fabbricato::Fabbricato(string p, double r, string c, bool pc, bool s, bool i): BeneImmobile(p,r), CategoriaCatastale(c), PrimaCasa(pc), Storico(s), Inagibile(i) {}
+Fabbricato::Fabbricato(string co, int f, int pa, string pr, double r, string c, bool pc, bool s, bool i): BeneImmobile(co,f,pa,pr,r), CategoriaCatastale(c), PrimaCasa(pc), Storico(s), Inagibile(i) {}
 
-bool Fabbricato::operator==(const BeneImmobile& b) const {
+/*bool Fabbricato::operator==(const BeneImmobile& b) const {
 	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
-	return f && BeneImmobile::operator==(*f) && CategoriaCatastale==f->CategoriaCatastale;
+	return f && BeneImmobile::operator==(*f);
+	//return f && BeneImmobile::operator==(*f) && CategoriaCatastale==f->CategoriaCatastale;
 }
 
 bool Fabbricato::operator<(const BeneImmobile& b) const {
 	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
-	return f && BeneImmobile::operator<(*f) && CategoriaCatastale<f->CategoriaCatastale;
-}
+	return f && BeneImmobile::operator<(*f);
+	//return f && BeneImmobile::operator<(*f) && CategoriaCatastale<f->CategoriaCatastale;
+}*/
 
 Fabbricato* Fabbricato::clone() const {
 	return new Fabbricato(*this);
