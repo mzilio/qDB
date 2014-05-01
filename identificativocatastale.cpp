@@ -15,6 +15,10 @@ bool IdentificativoCatastale::operator==(const IdentificativoCatastale& i) const
 	return Comune==i.Comune && Foglio==i.Foglio && Particella==i.Particella;
 }
 
+bool IdentificativoCatastale::operator!=(const IdentificativoCatastale& i) const {
+	return Comune!=i.Comune && Foglio!=i.Foglio && Particella!=i.Particella;
+}
+
 bool IdentificativoCatastale::operator<(const IdentificativoCatastale& i) const {
 	return Comune<i.Comune && Foglio<i.Foglio && Particella<i.Particella;
 }

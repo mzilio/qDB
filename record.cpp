@@ -24,6 +24,10 @@ bool Record::operator==(const Record& r) const {
 	return *punt==*r.punt;
 }
 
+bool Record::operator!=(const Record& r) const {
+	return *punt!=*r.punt;
+}
+
 BeneImmobile& Record::operator*() {
 	return *punt;
 }

@@ -11,6 +11,7 @@ private:
 public:
 	IdentificativoCatastale(string, int, int) throw(Error);
 	bool operator==(const IdentificativoCatastale&) const;
+	bool operator!=(const IdentificativoCatastale&) const;
 	bool operator<(const IdentificativoCatastale&) const;
 	string getComune() const;
 	int getFoglio() const;

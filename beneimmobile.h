@@ -14,6 +14,7 @@ public:
 	BeneImmobile(string, int, int, string, double);
 	virtual ~BeneImmobile();
 	virtual bool operator==(const BeneImmobile&) const;
+	virtual bool operator!=(const BeneImmobile&) const;
 	virtual bool operator<(const BeneImmobile&) const;
 	virtual BeneImmobile* clone() const =0;
 	IdentificativoCatastale getIdentificativoCatastale() const;

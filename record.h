@@ -12,6 +12,7 @@ public:
 	Record& operator=(const Record&);
 	bool operator<(const Record&) const;
 	bool operator==(const Record&) const;
+	bool operator!=(const Record&) const;
 	BeneImmobile& operator*();
 	BeneImmobile* operator->();
 	const BeneImmobile& operator*() const;
