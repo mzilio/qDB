@@ -18,7 +18,9 @@ public:
 	virtual BeneImmobile* clone() const =0;
 	IdentificativoCatastale getIdentificativoCatastale() const;
 	string getProprietario() const;
+	void setProprietario(string);
 	double getRenditaCatastale() const;
+	void setRenditaCatastale(double);
 	virtual double calcoloImu() const =0;
 };
 #endif

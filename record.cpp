@@ -15,3 +15,11 @@ Record& Record::operator=(const Record& r) {
 Record::~Record() {
 	delete punt;
 }
+
+bool Record::operator<(const Record& r) const {
+	return *punt<*r.punt;
+}
+
+bool Record::operator==(const Record& r) const {
+	return *punt==*r.punt;
+}

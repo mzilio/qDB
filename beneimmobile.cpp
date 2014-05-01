@@ -24,6 +24,14 @@ string BeneImmobile::getProprietario() const {
 	return Proprietario;
 }
 
+void BeneImmobile::setProprietario(string p) {
+	Proprietario=p;
+}
+
 double BeneImmobile::getRenditaCatastale() const {
 	return RenditaCatastale;
+}
+
+void BeneImmobile::setRenditaCatastale(double r) {
+	RenditaCatastale=r;
 }

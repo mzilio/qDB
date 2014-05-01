@@ -10,5 +10,7 @@ public:
 	Record(const Record&);
 	Record& operator=(const Record&);
 	~Record();
+	bool operator<(const Record&) const;
+	bool operator==(const Record&) const;
 };
 #endif

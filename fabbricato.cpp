@@ -14,7 +14,15 @@ double Fabbricato::MoltiplicatoreDX = 60.0;
 
 double Fabbricato::MoltiplicatoreC1 = 55.0;
 
-Fabbricato::Fabbricato(string co, int f, int pa, string pr, double r, string c, bool pc, bool s, bool i): BeneImmobile(co,f,pa,pr,r), CategoriaCatastale(c), PrimaCasa(pc), Storico(s), Inagibile(i) {}
+Fabbricato::Fabbricato(string co, int f, int pa, string pr, double r, string c, bool pc, bool s, bool i): BeneImmobile(co,f,pa,pr,r), CategoriaCatastale(c) {
+	PrimaCasa=Storico=Inagibile=false;
+	if (pc)
+		PrimaCasa=true;
+	else if (s)
+		Storico=true;
+	else if (i)
+		Inagibile=true;
+}
 
 /*bool Fabbricato::operator==(const BeneImmobile& b) const {
 	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
@@ -36,16 +44,41 @@ bool Fabbricato::isPrimaCasa() const {
 	return PrimaCasa;
 }
 
+void Fabbricato::setPrimaCasa(bool p) {
+	if (p) {
+		Storico=Inagibile=false;
+	}
+	PrimaCasa=p;
+}
+
 bool Fabbricato::isStorico() const {
 	return Storico;
+}
+
+void Fabbricato::setStorico(bool s) {
+	if (s) {
+		PrimaCasa=Inagibile=false;
+	}
+	Storico=s;
 }
 
 bool Fabbricato::isInagibile() const {
 	return Inagibile;
 }
 
+void Fabbricato::setInagibile(bool i) {
+	if (i) {
+		PrimaCasa=Storico=false;
+	}
+	Inagibile=i;
+}
+
 string Fabbricato::getCategoriaCatastale() const{
 	return CategoriaCatastale;
+}
+
+void Fabbricato::setCategoriaCatastale(string c) {
+	CategoriaCatastale=c;
 }
 
 double Fabbricato::calcoloImu() const throw(Error) {

@@ -22,9 +22,13 @@ public:
 	//bool operator<(const BeneImmobile&) const;
 	Fabbricato* clone() const;
 	bool isPrimaCasa() const;
+	void setPrimaCasa(bool);
 	bool isStorico() const;
+	void setStorico(bool);
 	bool isInagibile() const;
+	void setInagibile(bool);
 	string getCategoriaCatastale() const;
+	void setCategoriaCatastale(string);
 	double calcoloImu() const throw(Error);
 };
 #endif
