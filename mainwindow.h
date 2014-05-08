@@ -12,6 +12,9 @@
 #include <QMessageBox>
 #include "centralwidget.h"
 #include "searchdialog.h"
+#include "controller.h"
+
+class Controller;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -24,12 +27,14 @@ private:
     QAction* searchRecord;
     QAction* calcoloImu;
     SearchDialog* searchWindow;
+    Controller* controller;
     void createActions();
     void connectSignalSlot();
 private slots:
     void showImu();
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget* = 0);
     ~MainWindow();
+    void setController(Controller*);
 };
 #endif // MAINWINDOW_H

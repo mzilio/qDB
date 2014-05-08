@@ -22,7 +22,7 @@ void MainWindow::showImu() {
     show.exec();
 }
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     searchWindow = new SearchDialog(this);
     createActions();
 
@@ -53,3 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::setController(Controller* c) {
+    controller=c;
+}

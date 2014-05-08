@@ -10,5 +10,6 @@ int main(int argc, char *argv[]) {
     Container<Record> model;
     MainWindow view;
     Controller controller(&model,&view);
+    view.setController(&controller);
     return a.exec();
 }
