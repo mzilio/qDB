@@ -23,11 +23,11 @@ void MainWindow::showImu() {
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    searchWindow = new SearchDialog();
+    searchWindow = new SearchDialog(this);
     createActions();
 
     //Imposto il central widget
-    CentralWidget* t = new CentralWidget();
+    CentralWidget* t = new CentralWidget(this);
     setCentralWidget(t);
 
     //Aggiungo un menu alla menu bar

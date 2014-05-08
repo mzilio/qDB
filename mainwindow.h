@@ -12,7 +12,6 @@
 #include <QMessageBox>
 #include "centralwidget.h"
 #include "searchdialog.h"
-#include "controller.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
