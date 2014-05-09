@@ -11,11 +11,8 @@ void CentralWidget::drawWidget() {
     propLabel=new QLabel("Proprietario");
     renditaLabel=new QLabel("Rendita catastale");
     comuneEdit=new QLineEdit();
-    comuneEdit->setReadOnly(true);
     foglioEdit=new QLineEdit();
-    foglioEdit->setReadOnly(true);
     partiEdit=new QLineEdit();
-    partiEdit->setReadOnly(true);
     propEdit=new QLineEdit();
     renditaEdit=new QLineEdit();
     QGroupBox* box1=new QGroupBox();
@@ -35,7 +32,6 @@ void CentralWidget::drawWidget() {
 
     QGroupBox* box2=new QGroupBox();
     box2->setTitle("Fabbricato");
-    //box2->setEnabled(false);
     classeLabel=new QLabel("Classe catastale");
     classeEdit=new QLineEdit();
     primaCasa=new QRadioButton("Prima casa",this);
@@ -54,4 +50,50 @@ void CentralWidget::drawWidget() {
     layout->addWidget(box1);
     layout->addWidget(box2);
     setLayout(layout);
+    readOnly();
+}
+
+void CentralWidget::readOnly() {
+    comuneEdit->setReadOnly(true);
+    foglioEdit->setReadOnly(true);
+    partiEdit->setReadOnly(true);
+    propEdit->setReadOnly(true);
+    renditaEdit->setReadOnly(true);
+    classeEdit->setReadOnly(true);
+    primaCasa->setEnabled(false);
+    storico->setEnabled(false);
+    inagibile->setEnabled(false);
+}
+
+void CentralWidget::newInsert() {
+    comuneEdit->clear();
+    comuneEdit->setReadOnly(false);
+    foglioEdit->clear();
+    foglioEdit->setReadOnly(false);
+    partiEdit->clear();
+    partiEdit->setReadOnly(false);
+    propEdit->clear();
+    propEdit->setReadOnly(false);
+    renditaEdit->clear();
+    renditaEdit->setReadOnly(false);
+    classeEdit->clear();
+    classeEdit->setReadOnly(false);
+    primaCasa->setEnabled(true);
+    primaCasa->setAutoExclusive(false);
+    primaCasa->setChecked(false);
+    primaCasa->setAutoExclusive(true);
+    storico->setEnabled(true);
+    storico->setAutoExclusive(false);
+    storico->setChecked(false);
+    storico->setAutoExclusive(true);
+    inagibile->setEnabled(true);
+    inagibile->setAutoExclusive(false);
+    inagibile->setChecked(false);
+    inagibile->setAutoExclusive(true);
+}
+
+void CentralWidget::modify() {
+    comuneEdit->setReadOnly(true);
+    foglioEdit->setReadOnly(true);
+    partiEdit->setReadOnly(true);
 }

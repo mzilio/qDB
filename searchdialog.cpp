@@ -1,10 +1,19 @@
 #include "searchdialog.h"
 
 void SearchDialog::connectSignalSlot() {
+    connect(search,SIGNAL(clicked()),this,SLOT(startSearch()));
     connect(cancel,SIGNAL(clicked()),this,SLOT(reject()));
 }
 
-SearchDialog::SearchDialog(QWidget *parent): QDialog(parent) {
+void SearchDialog::startSearch() {
+    QStringList dataSearch(comuneEdit->text());
+    dataSearch.push_back(foglioEdit->text());
+    dataSearch.push_back(partiEdit->text());
+    controller->stampa();
+    done(0);
+}
+
+SearchDialog::SearchDialog(Controller* c, QWidget* parent): QDialog(parent), controller(c) {
     comuneLabel=new QLabel("Comune");
     foglioLabel=new QLabel("Foglio");
     partiLabel=new QLabel("Particella");

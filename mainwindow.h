@@ -10,27 +10,32 @@
 #include <QStatusBar>
 #include <QAction>
 #include <QMessageBox>
+#include "controller.h"
 #include "centralwidget.h"
 #include "searchdialog.h"
-#include "controller.h"
 
 class Controller;
+
+class SearchDialog;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
+    Controller* controller;
+    CentralWidget* centralWindow;
+    SearchDialog* searchWindow;
     QMenu* fileMenu;
     QToolBar* toolBar;
     QAction* newRecord;
+    QAction* modifyRecord;
     QAction* saveRecord;
     QAction* deleteRecord;
     QAction* searchRecord;
     QAction* calcoloImu;
-    SearchDialog* searchWindow;
-    Controller* controller;
     void createActions();
     void connectSignalSlot();
 private slots:
+    void saveToModel();
     void showImu();
 public:
     MainWindow(QWidget* = 0);

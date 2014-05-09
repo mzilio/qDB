@@ -30,6 +30,10 @@ private:
     void drawWidget();
 public:
     explicit CentralWidget(QWidget *parent = 0);
+    void readOnly();
+public slots:
+    void newInsert();
+    void modify();
 };
 
 #endif // CENTRALWIDGET_H

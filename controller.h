@@ -1,10 +1,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QObject>
+#include <QStringList>
 #include "container.h"
 #include "record.h"
 #include "mainwindow.h"
+#include <iostream>
+using std::cout;
 
 class MainWindow;
 
@@ -14,6 +16,7 @@ private:
     MainWindow* view;
 public:
     Controller(Container<Record>*, MainWindow*);
+    void stampa();
 };
 
 #endif // CONTROLLER_H

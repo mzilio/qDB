@@ -2,6 +2,7 @@
 
 void MainWindow::createActions() {
     newRecord=new QAction("Nuovo",this);
+    modifyRecord=new QAction("Modifica",this);
     saveRecord=new QAction("Salva",this);
     deleteRecord=new QAction("Elimina",this);
     searchRecord=new QAction("Cerca",this);
@@ -9,26 +10,36 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::connectSignalSlot() {
+    connect(newRecord,SIGNAL(triggered()),centralWindow,SLOT(newInsert()));
+    connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
+    connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
+    //TODO connect(deleteRecord,SIGNAL(triggered()),this,SLOT());
     connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
     connect(calcoloImu,SIGNAL(triggered()),this,SLOT(showImu()));
+}
+
+void MainWindow::saveToModel() {
+    controller->stampa();
+    //TODO invocare un metodo di salvataggio sulla central window che ritorna i campi
+    //TODO inviare al controller i campi dati
 }
 
 void MainWindow::showImu() {
     QMessageBox show;
     show.setText("L'IMU calcolato per il bene immobile selezionato risulta essere di euro:");
-    //show.setInformativeText("125,00");
+    //TODO show.setInformativeText("125,00"); invocando il metodo calcoloImu() sull'oggetto
     show.setStandardButtons(QMessageBox::Ok);
     show.setIcon(QMessageBox::Information);
     show.exec();
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
-    searchWindow = new SearchDialog(this);
+    searchWindow = new SearchDialog(controller,this);
     createActions();
 
     //Imposto il central widget
-    CentralWidget* t = new CentralWidget(this);
-    setCentralWidget(t);
+    centralWindow = new CentralWidget(this);
+    setCentralWidget(centralWindow);
 
     //Aggiungo un menu alla menu bar
     fileMenu = menuBar()->addMenu("&File");
@@ -41,6 +52,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     //Istruzioni per la tool bar
     toolBar = addToolBar("Record");
     toolBar->addAction(newRecord);
+    toolBar->addAction(modifyRecord);
     toolBar->addAction(saveRecord);
     toolBar->addAction(deleteRecord);
     toolBar->addAction(searchRecord);

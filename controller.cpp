@@ -3,3 +3,7 @@
 Controller::Controller(Container<Record>* m, MainWindow* v): model(m), view(v) {
     v->show();
 }
+
+void Controller::stampa() {
+    cout << "ciao ";
+}
