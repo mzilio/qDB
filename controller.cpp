@@ -18,10 +18,9 @@ void Controller::searchRecord(QStringList x) {
             particella=tmp.toInt();
     }
     try {
-        IdentificativoCatastale id(comune,foglio,particella);
-        Terreno t(id);
-        Record r(&t);
-        Container<Record>::Iterator it=model->FindItem(r);
+        Terreno* t=new Terreno(comune,foglio,particella,"",0.0);
+        Record* r=new Record(t);
+        Container<Record>::Iterator it=model->FindItem(*r);
     }
     catch (Error e) {
         cout << e.getError();

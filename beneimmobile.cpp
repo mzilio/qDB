@@ -4,8 +4,6 @@ double BeneImmobile::AliquotaStandard = 0.76;
 
 BeneImmobile::BeneImmobile(string c, int f, int pa, string pr, double r): id(c,f,pa), Proprietario(pr), RenditaCatastale(r) {}
 
-BeneImmobile::BeneImmobile(IdentificativoCatastale i, string pr, double r): id(i), Proprietario(pr), RenditaCatastale(r) {}
-
 BeneImmobile::~BeneImmobile() {}
 
 bool BeneImmobile::operator==(const BeneImmobile& b) const {
