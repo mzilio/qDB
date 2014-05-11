@@ -9,7 +9,7 @@ void SearchDialog::startSearch() {
     QStringList dataSearch(comuneEdit->text());
     dataSearch.push_back(foglioEdit->text());
     dataSearch.push_back(partiEdit->text());
-    controller->stampa();
+    controller->searchRecord(dataSearch);
     done(0);
 }
 

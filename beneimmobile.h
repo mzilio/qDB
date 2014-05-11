@@ -12,6 +12,7 @@ private:
 public:
 	static double AliquotaStandard;
 	BeneImmobile(string, int, int, string, double);
+    BeneImmobile(IdentificativoCatastale, string =0, double =0);
 	virtual ~BeneImmobile();
 	virtual bool operator==(const BeneImmobile&) const;
 	virtual bool operator!=(const BeneImmobile&) const;

@@ -19,7 +19,7 @@ void MainWindow::connectSignalSlot() {
 }
 
 void MainWindow::saveToModel() {
-    controller->stampa();
+    //controller->stampa();
     //TODO invocare un metodo di salvataggio sulla central window che ritorna i campi
     //TODO inviare al controller i campi dati
 }
