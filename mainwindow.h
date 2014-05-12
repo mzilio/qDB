@@ -16,8 +16,6 @@
 
 class Controller;
 
-class SearchDialog;
-
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:

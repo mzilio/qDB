@@ -1,14 +1,13 @@
 #include <QApplication>
+#include "mainwindow.h"
 #include "container.h"
 #include "record.h"
-#include "mainwindow.h"
 #include "controller.h"
 
 int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
-    Container<Record> model;
+    QApplication app(argc, argv);
     MainWindow view;
+    Container<Record> model;
     Controller controller(&model,&view);
-    view.setController(&controller);
-    return a.exec();
+    return app.exec();
 }

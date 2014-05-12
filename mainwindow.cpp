@@ -14,14 +14,12 @@ void MainWindow::connectSignalSlot() {
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
     //TODO connect(deleteRecord,SIGNAL(triggered()),this,SLOT());
-    connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
+    //TODO connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
     connect(calcoloImu,SIGNAL(triggered()),this,SLOT(showImu()));
 }
 
 void MainWindow::saveToModel() {
-    //controller->stampa();
-    //TODO invocare un metodo di salvataggio sulla central window che ritorna i campi
-    //TODO inviare al controller i campi dati
+    //TODO recuperare i dati dalla central window e inviarli al controller
 }
 
 void MainWindow::showImu() {
@@ -34,7 +32,7 @@ void MainWindow::showImu() {
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
-    searchWindow = new SearchDialog(controller,this);
+    searchWindow = new SearchDialog(this);
     createActions();
 
     //Imposto il central widget
