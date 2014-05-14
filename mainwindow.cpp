@@ -14,12 +14,12 @@ void MainWindow::connectSignalSlot() {
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
     //TODO connect(deleteRecord,SIGNAL(triggered()),this,SLOT());
-    //TODO connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
+    connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
     connect(calcoloImu,SIGNAL(triggered()),this,SLOT(showImu()));
 }
 
 void MainWindow::saveToModel() {
-    //TODO recuperare i dati dalla central window e inviarli al controller
+    controller->insertRecord(centralWindow->getFieldModified());
 }
 
 void MainWindow::showImu() {
@@ -66,4 +66,8 @@ MainWindow::~MainWindow() {}
 
 void MainWindow::setController(Controller* c) {
     controller=c;
+}
+
+void MainWindow::startSearch() {
+    controller->searchRecord(searchWindow->sendDataSearch());
 }

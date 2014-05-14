@@ -8,10 +8,12 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QVBoxLayout>
+#include <QHash>
 
 class CentralWidget : public QWidget {
     Q_OBJECT
 private:
+    QHash<QString,QString>* hash;
     QLabel* comuneLabel;
     QLabel* foglioLabel;
     QLabel* partiLabel;
@@ -29,8 +31,9 @@ private:
     QRadioButton* inagibile;
     void drawWidget();
 public:
-    explicit CentralWidget(QWidget *parent = 0);
+    explicit CentralWidget(QWidget* =0);
     void readOnly();
+    QHash<QString,QString>* getFieldModified();
 public slots:
     void newInsert();
     void modify();

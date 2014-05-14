@@ -1,11 +1,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QStringList>
 #include <string>
 #include "container.h"
 #include "record.h"
 #include "mainwindow.h"
+#include "fabbricato.h"
 #include "terreno.h"
 #include <iostream>
 using std::cout;
@@ -19,7 +19,8 @@ private:
     MainWindow* view;
 public:
     Controller(Container<Record>*, MainWindow*);
-    void searchRecord(QStringList);
+    void searchRecord(QHash<QString,QString>*);
+    void insertRecord(QHash<QString,QString>*);
 };
 
 #endif // CONTROLLER_H

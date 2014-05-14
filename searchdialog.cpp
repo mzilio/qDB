@@ -1,19 +1,20 @@
 #include "searchdialog.h"
 
 void SearchDialog::connectSignalSlot() {
-    //connect(search,SIGNAL(clicked()),this,SLOT(startSearch()));
+    connect(search,SIGNAL(clicked()),mainWindow,SLOT(startSearch()));
     connect(cancel,SIGNAL(clicked()),this,SLOT(reject()));
 }
 
-/*void SearchDialog::startSearch() {
-    QStringList dataSearch(comuneEdit->text());
-    dataSearch.push_back(foglioEdit->text());
-    dataSearch.push_back(partiEdit->text());
-    controller->searchRecord(dataSearch);
+QHash<QString,QString>* SearchDialog::sendDataSearch() {
+    hash=new QHash<QString,QString>();
+    hash->insert("comune",comuneEdit->text());
+    hash->insert("foglio",foglioEdit->text());
+    hash->insert("parti",partiEdit->text());
     done(0);
-}*/
+    return hash;
+}
 
-SearchDialog::SearchDialog(QWidget* parent): QDialog(parent) {
+SearchDialog::SearchDialog(QWidget* parent): QDialog(parent), mainWindow(parent) {
     comuneLabel=new QLabel("Comune");
     foglioLabel=new QLabel("Foglio");
     partiLabel=new QLabel("Particella");

@@ -1,6 +1,6 @@
 #include "centralwidget.h"
 
-CentralWidget::CentralWidget(QWidget *parent) : QWidget(parent) {
+CentralWidget::CentralWidget(QWidget* parent): QWidget(parent) {
     drawWidget();
 }
 
@@ -63,6 +63,35 @@ void CentralWidget::readOnly() {
     primaCasa->setEnabled(false);
     storico->setEnabled(false);
     inagibile->setEnabled(false);
+}
+
+QHash<QString,QString>* CentralWidget::getFieldModified() {
+    hash=new QHash<QString,QString>();
+    if (comuneEdit->isModified())
+        hash->insert("comune",comuneEdit->text());
+    if (foglioEdit->isModified())
+        hash->insert("foglio",foglioEdit->text());
+    if (partiEdit->isModified())
+        hash->insert("parti",partiEdit->text());
+    if (propEdit->isModified())
+        hash->insert("prop",propEdit->text());
+    if (renditaEdit->isModified())
+        hash->insert("rendita",renditaEdit->text());
+    if (classeEdit->isModified())
+        hash->insert("classe",classeEdit->text());
+    if (primaCasa->isChecked())
+        hash->insert("primaCasa","true");
+    else
+        hash->insert("primaCasa","false");
+    if (storico->isChecked())
+        hash->insert("storico","true");
+    else
+        hash->insert("storico","false");
+    if (inagibile->isChecked())
+        hash->insert("inagibile","true");
+    else
+        hash->insert("inagibile","false");
+    return hash;
 }
 
 void CentralWidget::newInsert() {

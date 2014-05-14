@@ -5,20 +5,43 @@ Controller::Controller(Container<Record>* m, MainWindow* v): model(m), view(v) {
     view->show();
 }
 
-void Controller::searchRecord(QStringList x) {
-    string comune="";
-    int foglio=0, particella=0;
-    for (int i=0; i<3; i++) {
-        QString tmp=x.front();
-        x.pop_front();
-        if (i==0)
-            comune=tmp.toStdString();
-        else if (i==1)
-            foglio=tmp.toInt();
-        else if (i==2)
-            particella=tmp.toInt();
-    }
-    Terreno t(comune,foglio,particella,"",0.0);
+void Controller::searchRecord(QHash<QString,QString>* x) {
+    string comune=x->value("comune").toStdString();
+    int foglio=x->value("foglio").toInt();
+    int parti=x->value("parti").toInt();
+    Terreno t(comune,foglio,parti,"",0.0);
     Record r(&t);
     Container<Record>::Iterator it=model->FindItem(r);
+}
+
+void Controller::insertRecord(QHash<QString,QString>* x) {
+    BeneImmobile* newRecord;
+    string comune=x->value("comune").toStdString();
+    int foglio=x->value("foglio").toInt();
+    int parti=x->value("parti").toInt();
+    string prop=x->value("prop").toStdString();
+    double rendita=x->value("rendita").toDouble();
+    if (x->contains("classe")) {
+        string classe=x->value("classe").toStdString();
+        bool pc, s, i;
+        if (x->value("primaCasa")=="true")
+            pc=true;
+        else
+            pc=false;
+        if (x->value("storico")=="true")
+            s=true;
+        else
+            s=false;
+        if (x->value("inagibile")=="true")
+            i=true;
+        else
+            i=false;
+        newRecord=new Fabbricato(comune,foglio,parti,prop,rendita,classe,pc,s,i);
+    }
+    else {
+        newRecord=new Terreno(comune,foglio,parti,prop,rendita);
+    }
+    Record r(newRecord);
+    model->AddItem(r);
+    cout << "Inserimento riuscito! Ora nel container sono presenti " << model->Size() << " record" << endl;
 }

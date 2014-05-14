@@ -39,5 +39,7 @@ public:
     MainWindow(QWidget* = 0);
     ~MainWindow();
     void setController(Controller*);
+public slots:
+    void startSearch();
 };
 #endif // MAINWINDOW_H

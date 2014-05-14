@@ -10,6 +10,8 @@
 class SearchDialog : public QDialog {
     Q_OBJECT
 private:
+    QWidget* mainWindow;
+    QHash<QString,QString>* hash;
     QLabel* comuneLabel;
     QLabel* foglioLabel;
     QLabel* partiLabel;
@@ -21,6 +23,7 @@ private:
     void connectSignalSlot();
 public:
     explicit SearchDialog(QWidget* =0);
+    QHash<QString,QString>* sendDataSearch();
 };
 
 #endif // SEARCHDIALOG_H
