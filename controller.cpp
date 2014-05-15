@@ -12,6 +12,7 @@ void Controller::searchRecord(QHash<QString,QString>* x) {
     Terreno t(comune,foglio,parti,"",0.0);
     Record r(&t);
     Container<Record>::Iterator it=model->FindItem(r);
+    view->updateView(model,it);
 }
 
 void Controller::insertRecord(QHash<QString,QString>* x) {

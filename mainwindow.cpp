@@ -68,9 +68,23 @@ void MainWindow::setController(Controller* c) {
     controller=c;
 }
 
-void MainWindow::updateView(Container<Record>::Iterator x) {
-    //TODO recuperare i dati dall'iteratore
-    //centralWindow->updateField();
+void MainWindow::updateView(Container<Record>* model,Container<Record>::Iterator x) {
+    if (x) {
+        bool isFabbricato=false, primaCasa=false, storico=false, inagibile=false;
+        QString comune=QString::fromStdString((*model)[x]->getIdentificativoCatastale().getComune());
+        QString foglio=QString::number((*model)[x]->getIdentificativoCatastale().getFoglio());
+        QString particella=QString::number((*model)[x]->getIdentificativoCatastale().getParticella());
+        QString proprietario=QString::fromStdString((*model)[x]->getProprietario());
+        QString rendita=QString::number((*model)[x]->getRenditaCatastale());
+        QString classe="";
+        /*if (dynamic_cast<Fabbricato*>((*model)[x])) {
+            isFabbricato=true;
+        }
+        centralWindow->updateField(isFabbricato,comune,foglio,particella,proprietario,rendita,classe,primaCasa,storico,inagibile);*/
+    }
+    else {
+        QMessageBox::warning(this,"qDB","La ricerca non ha prodotto risultati",QMessageBox::Ok);
+    }
 }
 
 void MainWindow::startSearch() {
