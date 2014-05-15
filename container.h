@@ -34,6 +34,7 @@ public:
 	public:
 		bool operator==(Iterator) const;
 		bool operator!=(Iterator) const;
+        K* operator*();
 		Iterator& operator++();
 		operator bool() const;
 	};
@@ -102,6 +103,11 @@ bool Container<K>::Iterator::operator==(typename Container<K>::Iterator x) const
 template <class K>
 bool Container<K>::Iterator::operator!=(typename Container<K>::Iterator x) const {
 	return it!=x.it;
+}
+
+template <class K>
+K* Container<K>::Iterator::operator*() {
+    return &(it->info);
 }
 
 template <class K>
