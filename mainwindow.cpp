@@ -68,6 +68,11 @@ void MainWindow::setController(Controller* c) {
     controller=c;
 }
 
+void MainWindow::updateView(Container<Record>::Iterator x) {
+    //TODO recuperare i dati dall'iteratore
+    //centralWindow->updateField();
+}
+
 void MainWindow::startSearch() {
     controller->searchRecord(searchWindow->sendDataSearch());
 }

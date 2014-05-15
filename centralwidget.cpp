@@ -15,7 +15,7 @@ void CentralWidget::drawWidget() {
     partiEdit=new QLineEdit();
     propEdit=new QLineEdit();
     renditaEdit=new QLineEdit();
-    QGroupBox* box1=new QGroupBox();
+    box1=new QGroupBox();
     box1->setTitle("Dati generali");
     QGridLayout* grid1=new QGridLayout();
     grid1->addWidget(comuneLabel,0,0);
@@ -30,7 +30,7 @@ void CentralWidget::drawWidget() {
     grid1->addWidget(renditaEdit,3,1,1,2);
     box1->setLayout(grid1);
 
-    QGroupBox* box2=new QGroupBox();
+    box2=new QGroupBox();
     box2->setTitle("Fabbricato");
     classeLabel=new QLabel("Classe catastale");
     classeEdit=new QLineEdit();
@@ -92,6 +92,33 @@ QHash<QString,QString>* CentralWidget::getFieldModified() {
     else
         hash->insert("inagibile","false");
     return hash;
+}
+
+void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QString pr, QString re, QString cl, bool pc, bool st, bool in) {
+    comuneEdit->insert(co);
+    foglioEdit->insert(fo);
+    partiEdit->insert(pa);
+    propEdit->insert(pr);
+    renditaEdit->insert(re);
+    if (f) {
+        box2->setEnabled(true);
+        classeEdit->insert(cl);
+        primaCasa->setEnabled(true);
+        primaCasa->setAutoExclusive(false);
+        primaCasa->setChecked(pc);
+        primaCasa->setAutoExclusive(true);
+        storico->setEnabled(true);
+        storico->setAutoExclusive(false);
+        storico->setChecked(st);
+        storico->setAutoExclusive(true);
+        inagibile->setEnabled(true);
+        inagibile->setAutoExclusive(false);
+        inagibile->setChecked(in);
+        inagibile->setAutoExclusive(true);
+    }
+    else {
+        box2->setDisabled(true);
+    }
 }
 
 void CentralWidget::newInsert() {

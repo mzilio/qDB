@@ -29,11 +29,14 @@ private:
     QRadioButton* primaCasa;
     QRadioButton* storico;
     QRadioButton* inagibile;
+    QGroupBox* box1;
+    QGroupBox* box2;
     void drawWidget();
 public:
     explicit CentralWidget(QWidget* =0);
     void readOnly();
     QHash<QString,QString>* getFieldModified();
+    void updateField(bool,QString,QString,QString,QString,QString,QString,bool,bool,bool);
 public slots:
     void newInsert();
     void modify();
