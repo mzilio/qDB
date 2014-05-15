@@ -37,6 +37,9 @@ public:
     void readOnly();
     QHash<QString,QString>* getFieldModified();
     void updateField(bool,QString,QString,QString,QString,QString,QString,bool,bool,bool);
+    void clear();
+    void lock();
+    void unlock();
 public slots:
     void newInsert();
     void modify();

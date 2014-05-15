@@ -119,36 +119,58 @@ void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QStr
     else {
         box2->setDisabled(true);
     }
+    lock();
 }
 
-void CentralWidget::newInsert() {
+void CentralWidget::clear() {
     comuneEdit->clear();
-    comuneEdit->setReadOnly(false);
     foglioEdit->clear();
-    foglioEdit->setReadOnly(false);
     partiEdit->clear();
-    partiEdit->setReadOnly(false);
     propEdit->clear();
-    propEdit->setReadOnly(false);
     renditaEdit->clear();
-    renditaEdit->setReadOnly(false);
     classeEdit->clear();
-    classeEdit->setReadOnly(false);
-    primaCasa->setEnabled(true);
     primaCasa->setAutoExclusive(false);
     primaCasa->setChecked(false);
     primaCasa->setAutoExclusive(true);
-    storico->setEnabled(true);
     storico->setAutoExclusive(false);
     storico->setChecked(false);
     storico->setAutoExclusive(true);
-    inagibile->setEnabled(true);
     inagibile->setAutoExclusive(false);
     inagibile->setChecked(false);
     inagibile->setAutoExclusive(true);
 }
 
+void CentralWidget::lock() {
+    comuneEdit->setReadOnly(true);
+    foglioEdit->setReadOnly(true);
+    partiEdit->setReadOnly(true);
+    propEdit->setReadOnly(true);
+    renditaEdit->setReadOnly(true);
+    classeEdit->setReadOnly(true);
+    primaCasa->setEnabled(false);
+    storico->setEnabled(false);
+    inagibile->setEnabled(false);
+}
+
+void CentralWidget::unlock() {
+    comuneEdit->setReadOnly(false);
+    foglioEdit->setReadOnly(false);
+    partiEdit->setReadOnly(false);
+    propEdit->setReadOnly(false);
+    renditaEdit->setReadOnly(false);
+    classeEdit->setReadOnly(false);
+    primaCasa->setEnabled(true);
+    storico->setEnabled(true);
+    inagibile->setEnabled(true);
+}
+
+void CentralWidget::newInsert() {
+    clear();
+    unlock();
+}
+
 void CentralWidget::modify() {
+    unlock();
     comuneEdit->setReadOnly(true);
     foglioEdit->setReadOnly(true);
     partiEdit->setReadOnly(true);

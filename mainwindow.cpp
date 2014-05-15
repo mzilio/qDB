@@ -20,6 +20,8 @@ void MainWindow::connectSignalSlot() {
 
 void MainWindow::saveToModel() {
     controller->insertRecord(centralWindow->getFieldModified());
+    centralWindow->clear();
+    centralWindow->lock();
 }
 
 void MainWindow::showImu() {
@@ -70,6 +72,7 @@ void MainWindow::setController(Controller* c) {
 
 void MainWindow::updateView(Container<Record>::Iterator x) {
     if (x) {
+        centralWindow->clear();
         bool isFabbricato=false, primaCasa=false, storico=false, inagibile=false;
         QString comune=QString::fromStdString((**x)->getIdentificativoCatastale().getComune());
         QString foglio=QString::number((**x)->getIdentificativoCatastale().getFoglio());
