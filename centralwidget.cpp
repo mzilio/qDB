@@ -2,9 +2,12 @@
 
 CentralWidget::CentralWidget(QWidget* parent): QWidget(parent) {
     drawWidget();
+    lock();
 }
 
 void CentralWidget::drawWidget() {
+    box1=new QGroupBox();
+    box1->setTitle("Dati generali");
     comuneLabel=new QLabel("Comune");
     foglioLabel=new QLabel("Foglio");
     partiLabel=new QLabel("Particella");
@@ -15,8 +18,6 @@ void CentralWidget::drawWidget() {
     partiEdit=new QLineEdit();
     propEdit=new QLineEdit();
     renditaEdit=new QLineEdit();
-    box1=new QGroupBox();
-    box1->setTitle("Dati generali");
     QGridLayout* grid1=new QGridLayout();
     grid1->addWidget(comuneLabel,0,0);
     grid1->addWidget(comuneEdit,1,0);
@@ -50,19 +51,6 @@ void CentralWidget::drawWidget() {
     layout->addWidget(box1);
     layout->addWidget(box2);
     setLayout(layout);
-    readOnly();
-}
-
-void CentralWidget::readOnly() {
-    comuneEdit->setReadOnly(true);
-    foglioEdit->setReadOnly(true);
-    partiEdit->setReadOnly(true);
-    propEdit->setReadOnly(true);
-    renditaEdit->setReadOnly(true);
-    classeEdit->setReadOnly(true);
-    primaCasa->setEnabled(false);
-    storico->setEnabled(false);
-    inagibile->setEnabled(false);
 }
 
 QHash<QString,QString>* CentralWidget::getFieldModified() {
@@ -103,18 +91,16 @@ void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QStr
     if (f) {
         box2->setEnabled(true);
         classeEdit->insert(cl);
-        primaCasa->setEnabled(true);
-        primaCasa->setAutoExclusive(false);
+        //TODO controllare se funziona senza AutoExclusive
+        //primaCasa->setAutoExclusive(false);
         primaCasa->setChecked(pc);
-        primaCasa->setAutoExclusive(true);
-        storico->setEnabled(true);
-        storico->setAutoExclusive(false);
+        //primaCasa->setAutoExclusive(true);
+        //storico->setAutoExclusive(false);
         storico->setChecked(st);
-        storico->setAutoExclusive(true);
-        inagibile->setEnabled(true);
-        inagibile->setAutoExclusive(false);
+        //storico->setAutoExclusive(true);
+        //inagibile->setAutoExclusive(false);
         inagibile->setChecked(in);
-        inagibile->setAutoExclusive(true);
+        //inagibile->setAutoExclusive(true);
     }
     else {
         box2->setDisabled(true);
@@ -123,12 +109,12 @@ void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QStr
 }
 
 void CentralWidget::clear() {
-    comuneEdit->clear();
-    foglioEdit->clear();
-    partiEdit->clear();
-    propEdit->clear();
-    renditaEdit->clear();
-    classeEdit->clear();
+    comuneEdit->setText("");
+    foglioEdit->setText("");
+    partiEdit->setText("");
+    propEdit->setText("");
+    renditaEdit->setText("");
+    classeEdit->setText("");
     primaCasa->setAutoExclusive(false);
     primaCasa->setChecked(false);
     primaCasa->setAutoExclusive(true);
@@ -166,6 +152,7 @@ void CentralWidget::unlock() {
 
 void CentralWidget::newInsert() {
     clear();
+    box2->setEnabled(true);
     unlock();
 }
 

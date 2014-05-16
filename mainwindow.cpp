@@ -19,17 +19,32 @@ void MainWindow::connectSignalSlot() {
 }
 
 void MainWindow::saveToModel() {
+    //TODO se è gia presente aggiorno i dati altrimenti faccio un nuovo inserimento
     controller->insertRecord(centralWindow->getFieldModified());
     centralWindow->clear();
     centralWindow->lock();
+    //TODO modificare opportunamente statusBar()->showMessage("Pronto",2000);
 }
 
 void MainWindow::showImu() {
+    Record* x=controller->getActualRecord();
     QMessageBox show;
-    show.setText("L'IMU calcolato per il bene immobile selezionato risulta essere di euro:");
-    //TODO show.setInformativeText("125,00"); invocando il metodo calcoloImu() sull'oggetto
+    if (x) {
+        show.setText("L'IMU calcolato per il bene immobile selezionato risulta essere di euro:");
+        try {
+            show.setInformativeText(QString::number((*x)->calcoloImu()));
+            show.setIcon(QMessageBox::Information);
+        }
+        catch (Error e) {
+            show.setText(QString::fromStdString(e.getError()));
+            show.setIcon(QMessageBox::Warning);
+        }
+    }
+    else {
+        show.setText("Non e' stato selezionato alcun bene immobile!");
+        show.setIcon(QMessageBox::Warning);
+    }
     show.setStandardButtons(QMessageBox::Ok);
-    show.setIcon(QMessageBox::Information);
     show.exec();
 }
 
@@ -70,20 +85,25 @@ void MainWindow::setController(Controller* c) {
     controller=c;
 }
 
-void MainWindow::updateView(Container<Record>::Iterator x) {
+void MainWindow::updateView() {
+    Record* x=controller->getActualRecord();
     if (x) {
         centralWindow->clear();
-        bool isFabbricato=false, primaCasa=false, storico=false, inagibile=false;
-        QString comune=QString::fromStdString((**x)->getIdentificativoCatastale().getComune());
-        QString foglio=QString::number((**x)->getIdentificativoCatastale().getFoglio());
-        QString particella=QString::number((**x)->getIdentificativoCatastale().getParticella());
-        QString proprietario=QString::fromStdString((**x)->getProprietario());
-        QString rendita=QString::number((**x)->getRenditaCatastale());
+        bool primaCasa=false, storico=false, inagibile=false;
+        QString comune=QString::fromStdString((*x)->getIdentificativoCatastale().getComune());
+        QString foglio=QString::number((*x)->getIdentificativoCatastale().getFoglio());
+        QString particella=QString::number((*x)->getIdentificativoCatastale().getParticella());
+        QString proprietario=QString::fromStdString((*x)->getProprietario());
+        QString rendita=QString::number((*x)->getRenditaCatastale());
         QString classe="";
-        if (dynamic_cast<Fabbricato*>(&(***x))) {
-            isFabbricato=true;
+        Fabbricato* f=dynamic_cast<Fabbricato*>(&(**x));
+        if (f) {
+            classe=QString::fromStdString(f->getCategoriaCatastale());
+            primaCasa=f->isPrimaCasa();
+            storico=f->isStorico();
+            inagibile=f->isInagibile();
         }
-        centralWindow->updateField(isFabbricato,comune,foglio,particella,proprietario,rendita,classe,primaCasa,storico,inagibile);
+        centralWindow->updateField(f,comune,foglio,particella,proprietario,rendita,classe,primaCasa,storico,inagibile);
     }
     else {
         QMessageBox::warning(this,"qDB","La ricerca non ha prodotto risultati",QMessageBox::Ok);

@@ -1,6 +1,6 @@
 #include "controller.h"
 
-Controller::Controller(Container<Record>* m, MainWindow* v): model(m), view(v) {
+Controller::Controller(Container<Record>* m, MainWindow* v): model(m), view(v), actualRecord(0) {
     view->setController(this);
     view->show();
 }
@@ -12,7 +12,8 @@ void Controller::searchRecord(QHash<QString,QString>* x) {
     Terreno t(comune,foglio,parti,"",0.0);
     Record r(&t);
     Container<Record>::Iterator it=model->FindItem(r);
-    view->updateView(it);
+    actualRecord=*it;
+    view->updateView();
 }
 
 void Controller::insertRecord(QHash<QString,QString>* x) {
@@ -45,4 +46,8 @@ void Controller::insertRecord(QHash<QString,QString>* x) {
     Record r(newRecord);
     model->AddItem(r);
     cout << "Inserimento riuscito! Ora nel container sono presenti " << model->Size() << " record" << endl;
+}
+
+Record* Controller::getActualRecord() {
+    return actualRecord;
 }

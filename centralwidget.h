@@ -34,7 +34,6 @@ private:
     void drawWidget();
 public:
     explicit CentralWidget(QWidget* =0);
-    void readOnly();
     QHash<QString,QString>* getFieldModified();
     void updateField(bool,QString,QString,QString,QString,QString,QString,bool,bool,bool);
     void clear();

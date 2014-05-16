@@ -39,7 +39,7 @@ public:
     MainWindow(QWidget* = 0);
     ~MainWindow();
     void setController(Controller*);
-    void updateView(Container<Record>::Iterator);
+    void updateView();
 public slots:
     void startSearch();
 };
