@@ -19,11 +19,20 @@ void MainWindow::connectSignalSlot() {
 }
 
 void MainWindow::saveToModel() {
-    //TODO non posso poter aggiungere oggetti senza campi dati
-    //TODO se è gia presente aggiorno i dati altrimenti faccio un nuovo inserimento
-    controller->insertRecord(centralWindow->getFieldModified());
-    centralWindow->clear();
-    centralWindow->lock();
+    if (!controller->getActualRecord()) {
+        if (centralWindow->haveNewData()) {
+            controller->insertRecord(centralWindow->getFieldModified());
+            centralWindow->clear();
+            centralWindow->lock();
+        }
+        else
+            //TODO testo intelligente
+            showWarning("Impossibile salvare!\nInserire almeno i dati generali");
+    }
+    else {
+        //TODO modifico il record già esistente
+        centralWindow->lock();
+    }
 }
 
 void MainWindow::deleteFromModel() {
@@ -54,22 +63,14 @@ void MainWindow::showImu() {
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
-    searchWindow = new SearchDialog(this);
-    createActions();
-
-    //Imposto il central widget
     centralWindow = new CentralWidget(this);
+    searchWindow = new SearchDialog(this);
     setCentralWidget(centralWindow);
-
-    //Aggiungo un menu alla menu bar
+    createActions();
     fileMenu = menuBar()->addMenu("&File");
-
-    //Al nuovo menu aggiungo delle azioni
     fileMenu->addAction("&New DB");
     fileMenu->addAction("&Open DB");
     fileMenu->addAction("&Save DB");
-
-    //Istruzioni per la tool bar
     toolBar = addToolBar("Record");
     toolBar->addAction(newRecord);
     toolBar->addAction(modifyRecord);
@@ -79,7 +80,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     toolBar->addSeparator();
     toolBar->addAction(calcoloImu);
     toolBar->setMovable(false);
-
     showStatus("Pronto");
     connectSignalSlot();
 }

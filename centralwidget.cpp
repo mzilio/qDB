@@ -83,14 +83,14 @@ QHash<QString,QString>* CentralWidget::getFieldModified() {
 }
 
 void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QString pr, QString re, QString cl, bool pc, bool st, bool in) {
-    comuneEdit->insert(co);
-    foglioEdit->insert(fo);
-    partiEdit->insert(pa);
-    propEdit->insert(pr);
-    renditaEdit->insert(re);
+    comuneEdit->setText(co);
+    foglioEdit->setText(fo);
+    partiEdit->setText(pa);
+    propEdit->setText(pr);
+    renditaEdit->setText(re);
     if (f) {
         box2->setEnabled(true);
-        classeEdit->insert(cl);
+        classeEdit->setText(cl);
         primaCasa->setChecked(pc);
         storico->setChecked(st);
         inagibile->setChecked(in);
@@ -118,7 +118,7 @@ void CentralWidget::clear() {
     inagibile->setAutoExclusive(true);
 }
 
-void CentralWidget::lock() {
+void CentralWidget::lock() const {
     comuneEdit->setReadOnly(true);
     foglioEdit->setReadOnly(true);
     partiEdit->setReadOnly(true);
@@ -130,7 +130,7 @@ void CentralWidget::lock() {
     inagibile->setEnabled(false);
 }
 
-void CentralWidget::unlock() {
+void CentralWidget::unlock() const {
     comuneEdit->setReadOnly(false);
     foglioEdit->setReadOnly(false);
     partiEdit->setReadOnly(false);
@@ -140,6 +140,10 @@ void CentralWidget::unlock() {
     primaCasa->setEnabled(true);
     storico->setEnabled(true);
     inagibile->setEnabled(true);
+}
+
+bool CentralWidget::haveNewData() const {
+    return comuneEdit->isModified() && foglioEdit->isModified() && partiEdit->isModified() && propEdit->isModified() && renditaEdit->isModified();
 }
 
 void CentralWidget::newInsert() {

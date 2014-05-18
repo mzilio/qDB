@@ -37,8 +37,9 @@ public:
     QHash<QString,QString>* getFieldModified();
     void updateField(bool,QString,QString,QString,QString,QString,QString,bool,bool,bool);
     void clear();
-    void lock();
-    void unlock();
+    void lock() const;
+    void unlock() const;
+    bool haveNewData() const;
 public slots:
     void newInsert();
     void modify();
