@@ -5,6 +5,10 @@ Controller::Controller(Container<Record>* m, MainWindow* v): model(m), view(v), 
     view->show();
 }
 
+Record* Controller::getActualRecord() const {
+    return actualRecord;
+}
+
 void Controller::searchRecord(QHash<QString,QString>* x) {
     string comune=x->value("comune").toStdString();
     int foglio=x->value("foglio").toInt();
@@ -14,6 +18,8 @@ void Controller::searchRecord(QHash<QString,QString>* x) {
     Container<Record>::Iterator it=model->FindItem(r);
     actualRecord=*it;
     view->updateView();
+    if (!it)
+        view->showWarning("La ricerca non ha prodotto risultati");
 }
 
 void Controller::insertRecord(QHash<QString,QString>* x) {
@@ -45,9 +51,14 @@ void Controller::insertRecord(QHash<QString,QString>* x) {
     }
     Record r(newRecord);
     model->AddItem(r);
-    cout << "Inserimento riuscito! Ora nel container sono presenti " << model->Size() << " record" << endl;
+    view->showStatus("Bene inserito");
 }
 
-Record* Controller::getActualRecord() {
-    return actualRecord;
+void Controller::deleteRecord() {
+    if (actualRecord) {
+        model->RemoveItem(*actualRecord);
+        actualRecord=0;
+        view->updateView();
+        view->showStatus("Bene eliminato");
+    }
 }

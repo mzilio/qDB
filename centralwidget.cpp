@@ -91,21 +91,13 @@ void CentralWidget::updateField(bool f, QString co, QString fo, QString pa, QStr
     if (f) {
         box2->setEnabled(true);
         classeEdit->insert(cl);
-        //TODO controllare se funziona senza AutoExclusive
-        //primaCasa->setAutoExclusive(false);
         primaCasa->setChecked(pc);
-        //primaCasa->setAutoExclusive(true);
-        //storico->setAutoExclusive(false);
         storico->setChecked(st);
-        //storico->setAutoExclusive(true);
-        //inagibile->setAutoExclusive(false);
         inagibile->setChecked(in);
-        //inagibile->setAutoExclusive(true);
     }
     else {
         box2->setDisabled(true);
     }
-    lock();
 }
 
 void CentralWidget::clear() {

@@ -34,12 +34,15 @@ private:
     void connectSignalSlot();
 private slots:
     void saveToModel();
+    void deleteFromModel();
     void showImu();
 public:
     MainWindow(QWidget* = 0);
     ~MainWindow();
     void setController(Controller*);
     void updateView();
+    void showWarning(const QString&);
+    void showStatus(const QString&,int =2000);
 public slots:
     void startSearch();
 };

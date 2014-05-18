@@ -159,8 +159,8 @@ typename Container<K>::Iterator Container<K>::Maximum() const {
 
 template <class K>
 typename Container<K>::Iterator Container<K>::Successor(typename Container<K>::Iterator x) {
-	if (x) {
-		typename Container<K>::Iterator y;
+    typename Container<K>::Iterator y;
+    if (x) {
 		if (x.it->dx) {
 			y.it=Minimum(x.it->dx);
 			return y;
@@ -170,14 +170,14 @@ typename Container<K>::Iterator Container<K>::Successor(typename Container<K>::I
 			x=y;
 			y.it=y.it->pred;
 		}
-		return y;
-	}
+    }
+    return y;
 }
 
 template <class K>
 typename Container<K>::Iterator Container<K>::Predecessor(typename Container<K>::Iterator x) {
-	if (x) {
-		typename Container<K>::Iterator y;
+    typename Container<K>::Iterator y;
+    if (x) {
 		if (x.it->sx) {
 			y.it=Maximum(x.it->sx);
 			return y;
@@ -187,8 +187,8 @@ typename Container<K>::Iterator Container<K>::Predecessor(typename Container<K>:
 			x=y;
 			y.it=y.it->pred;
 		}
-		return y;
-	}
+    }
+    return y;
 }
 
 template <class K>
@@ -248,6 +248,8 @@ K Container<K>::RemoveItem(const K& obj) {
 		size--;
 		return del.it->info;
 	}
+    else
+        return 0;
 }
 
 template <class K>

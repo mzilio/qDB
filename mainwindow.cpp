@@ -13,39 +13,44 @@ void MainWindow::connectSignalSlot() {
     connect(newRecord,SIGNAL(triggered()),centralWindow,SLOT(newInsert()));
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
-    //TODO connect(deleteRecord,SIGNAL(triggered()),this,SLOT());
+    connect(deleteRecord,SIGNAL(triggered()),this,SLOT(deleteFromModel()));
     connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
     connect(calcoloImu,SIGNAL(triggered()),this,SLOT(showImu()));
 }
 
 void MainWindow::saveToModel() {
+    //TODO non posso poter aggiungere oggetti senza campi dati
     //TODO se è gia presente aggiorno i dati altrimenti faccio un nuovo inserimento
     controller->insertRecord(centralWindow->getFieldModified());
     centralWindow->clear();
     centralWindow->lock();
-    //TODO modificare opportunamente statusBar()->showMessage("Pronto",2000);
+}
+
+void MainWindow::deleteFromModel() {
+    if (controller->getActualRecord()) {
+        controller->deleteRecord();
+    }
+    else
+        showWarning("Non e' stato selezionato alcun bene immobile!");
 }
 
 void MainWindow::showImu() {
     Record* x=controller->getActualRecord();
-    QMessageBox show;
     if (x) {
-        show.setText("L'IMU calcolato per il bene immobile selezionato risulta essere di euro:");
         try {
+            QMessageBox show;
+            show.setText("L'IMU calcolato per il bene immobile selezionato risulta essere di euro:");
             show.setInformativeText(QString::number((*x)->calcoloImu()));
             show.setIcon(QMessageBox::Information);
+            show.setStandardButtons(QMessageBox::Ok);
+            show.exec();
         }
         catch (Error e) {
-            show.setText(QString::fromStdString(e.getError()));
-            show.setIcon(QMessageBox::Warning);
+            showWarning(QString::fromStdString(e.getError()));
         }
     }
-    else {
-        show.setText("Non e' stato selezionato alcun bene immobile!");
-        show.setIcon(QMessageBox::Warning);
-    }
-    show.setStandardButtons(QMessageBox::Ok);
-    show.exec();
+    else
+        showWarning("Non e' stato selezionato alcun bene immobile!");
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
@@ -75,7 +80,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     toolBar->addAction(calcoloImu);
     toolBar->setMovable(false);
 
-    statusBar()->showMessage("Pronto",2000);
+    showStatus("Pronto");
     connectSignalSlot();
 }
 
@@ -87,8 +92,8 @@ void MainWindow::setController(Controller* c) {
 
 void MainWindow::updateView() {
     Record* x=controller->getActualRecord();
+    centralWindow->clear();
     if (x) {
-        centralWindow->clear();
         bool primaCasa=false, storico=false, inagibile=false;
         QString comune=QString::fromStdString((*x)->getIdentificativoCatastale().getComune());
         QString foglio=QString::number((*x)->getIdentificativoCatastale().getFoglio());
@@ -105,9 +110,15 @@ void MainWindow::updateView() {
         }
         centralWindow->updateField(f,comune,foglio,particella,proprietario,rendita,classe,primaCasa,storico,inagibile);
     }
-    else {
-        QMessageBox::warning(this,"qDB","La ricerca non ha prodotto risultati",QMessageBox::Ok);
-    }
+    centralWindow->lock();
+}
+
+void MainWindow::showWarning(const QString& x) {
+    QMessageBox::warning(this,"qDB",x,QMessageBox::Ok);
+}
+
+void MainWindow::showStatus(const QString& x, int y) {
+    statusBar()->showMessage(x,y);
 }
 
 void MainWindow::startSearch() {

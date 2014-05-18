@@ -7,9 +7,6 @@
 #include "mainwindow.h"
 #include "fabbricato.h"
 #include "terreno.h"
-#include <iostream>
-using std::cout;
-using std::endl;
 
 class MainWindow;
 
@@ -20,9 +17,10 @@ private:
     Record* actualRecord;
 public:
     Controller(Container<Record>*, MainWindow*);
+    Record* getActualRecord() const;
     void searchRecord(QHash<QString,QString>*);
     void insertRecord(QHash<QString,QString>*);
-    Record* getActualRecord();
+    void deleteRecord();
 };
 
 #endif // CONTROLLER_H
