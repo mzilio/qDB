@@ -20,6 +20,7 @@ public:
     Record* getActualRecord() const;
     void searchRecord(QHash<QString,QString>*);
     void insertRecord(QHash<QString,QString>*);
+    void modifyRecord(QHash<QString,QString>*);
     void deleteRecord();
 };
 

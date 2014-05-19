@@ -54,6 +54,30 @@ void Controller::insertRecord(QHash<QString,QString>* x) {
     view->showStatus("Bene inserito");
 }
 
+void Controller::modifyRecord(QHash<QString,QString>* x) {
+    if (x->contains("prop"))
+        (*actualRecord)->setProprietario(x->value("prop").toStdString());
+    if (x->contains("rendita"))
+        (*actualRecord)->setRenditaCatastale(x->value("rendita").toDouble());
+    Fabbricato* f=dynamic_cast<Fabbricato*>(&(**actualRecord));
+    if (f) {
+        if (x->contains("classe"))
+            f->setCategoriaCatastale(x->value("classe").toStdString());
+        if (x->value("primaCasa")=="true")
+            f->setPrimaCasa(true);
+        else
+            f->setPrimaCasa(false);
+        if (x->value("storico")=="true")
+            f->setStorico(true);
+        else
+            f->setStorico(false);
+        if (x->value("inagibile")=="true")
+            f->setInagibile(true);
+        else
+            f->setInagibile(false);
+    }
+}
+
 void Controller::deleteRecord() {
     if (actualRecord) {
         model->RemoveItem(*actualRecord);

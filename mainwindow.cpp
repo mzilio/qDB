@@ -30,7 +30,7 @@ void MainWindow::saveToModel() {
             showWarning("Impossibile salvare!\nInserire almeno i dati generali");
     }
     else {
-        //TODO modifico il record già esistente
+        controller->modifyRecord(centralWindow->getFieldModified());
         centralWindow->lock();
     }
 }
