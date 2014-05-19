@@ -9,6 +9,7 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHash>
+#include <QValidator>
 
 class CentralWidget : public QWidget {
     Q_OBJECT
@@ -32,6 +33,7 @@ private:
     QGroupBox* box1;
     QGroupBox* box2;
     void drawWidget();
+    void setValidator();
 public:
     explicit CentralWidget(QWidget* =0);
     QHash<QString,QString>* getFieldModified();

@@ -2,23 +2,24 @@
 
 CentralWidget::CentralWidget(QWidget* parent): QWidget(parent) {
     drawWidget();
+    setValidator();
     lock();
 }
 
 void CentralWidget::drawWidget() {
-    box1=new QGroupBox();
+    box1=new QGroupBox(this);
     box1->setTitle("Dati generali");
-    comuneLabel=new QLabel("Comune");
-    foglioLabel=new QLabel("Foglio");
-    partiLabel=new QLabel("Particella");
-    propLabel=new QLabel("Proprietario");
-    renditaLabel=new QLabel("Rendita catastale");
-    comuneEdit=new QLineEdit();
-    foglioEdit=new QLineEdit();
-    partiEdit=new QLineEdit();
-    propEdit=new QLineEdit();
-    renditaEdit=new QLineEdit();
-    QGridLayout* grid1=new QGridLayout();
+    comuneLabel=new QLabel("Comune",this);
+    foglioLabel=new QLabel("Foglio",this);
+    partiLabel=new QLabel("Particella",this);
+    propLabel=new QLabel("Proprietario",this);
+    renditaLabel=new QLabel("Rendita catastale",this);
+    comuneEdit=new QLineEdit(this);
+    foglioEdit=new QLineEdit(this);
+    partiEdit=new QLineEdit(this);
+    propEdit=new QLineEdit(this);
+    renditaEdit=new QLineEdit(this);
+    QGridLayout* grid1=new QGridLayout(this);
     grid1->addWidget(comuneLabel,0,0);
     grid1->addWidget(comuneEdit,1,0);
     grid1->addWidget(foglioLabel,0,1);
@@ -31,10 +32,10 @@ void CentralWidget::drawWidget() {
     grid1->addWidget(renditaEdit,3,1,1,2);
     box1->setLayout(grid1);
 
-    box2=new QGroupBox();
+    box2=new QGroupBox(this);
     box2->setTitle("Fabbricato");
-    classeLabel=new QLabel("Classe catastale");
-    classeEdit=new QLineEdit();
+    classeLabel=new QLabel("Classe catastale",this);
+    classeEdit=new QLineEdit(this);
     primaCasa=new QRadioButton("Prima casa",this);
     storico=new QRadioButton("Storico",this);
     inagibile=new QRadioButton("Inagibile",this);
@@ -47,10 +48,30 @@ void CentralWidget::drawWidget() {
     grid2->addWidget(inagibile,1,2);
     box2->setLayout(grid2);
 
-    QVBoxLayout* layout=new QVBoxLayout();
+    QVBoxLayout* layout=new QVBoxLayout(this);
     layout->addWidget(box1);
     layout->addWidget(box2);
     setLayout(layout);
+
+    QFont upperCase;
+    upperCase.setCapitalization(QFont::AllUppercase);
+    propEdit->setFont(upperCase);
+}
+
+void CentralWidget::setValidator() {
+    QRegExp comuneExp("^[A-Z]{1}[0-9]{3}$");
+    QRegExp renditaExp("^\\d*\\W?\\d?\\d?$");
+    QRegExp classeExp("^[A-D]{1}[1-9]{1}[0-1]?$");
+    //TODO chiedere a papà il range per l'int validator
+    QValidator* v1=new QIntValidator(0,1000,this);
+    QValidator* v2=new QRegExpValidator(renditaExp,this);
+    QValidator* v3=new QRegExpValidator(comuneExp,this);
+    QValidator* v4=new QRegExpValidator(classeExp,this);
+    comuneEdit->setValidator(v3);
+    foglioEdit->setValidator(v1);
+    partiEdit->setValidator(v1);
+    renditaEdit->setValidator(v2);
+    classeEdit->setValidator(v4);
 }
 
 QHash<QString,QString>* CentralWidget::getFieldModified() {

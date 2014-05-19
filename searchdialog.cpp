@@ -23,6 +23,15 @@ SearchDialog::SearchDialog(QWidget* parent): QDialog(parent), mainWindow(parent)
     partiEdit=new QLineEdit();
     search=new QPushButton("Cerca");
     cancel=new QPushButton("Cancella");
+
+    QRegExp comuneExp("^[A-Z]{1}[0-9]{3}$");
+    //TODO chiedere a papà il range per l'int validator
+    QValidator* v1=new QIntValidator(0,1000,this);
+    QValidator* v2=new QRegExpValidator(comuneExp,this);
+    comuneEdit->setValidator(v2);
+    foglioEdit->setValidator(v1);
+    partiEdit->setValidator(v1);
+
     QGridLayout* grid=new QGridLayout();
     grid->addWidget(comuneLabel,0,0);
     grid->addWidget(comuneEdit,0,1);

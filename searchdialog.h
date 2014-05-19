@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QValidator>
 
 class SearchDialog : public QDialog {
     Q_OBJECT
