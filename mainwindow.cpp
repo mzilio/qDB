@@ -10,7 +10,7 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::connectSignalSlot() {
-    connect(newRecord,SIGNAL(triggered()),centralWindow,SLOT(newInsert()));
+    connect(newRecord,SIGNAL(triggered()),this,SLOT(newInsert()));
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
     connect(deleteRecord,SIGNAL(triggered()),this,SLOT(deleteFromModel()));
@@ -22,8 +22,6 @@ void MainWindow::saveToModel() {
     if (!controller->getActualRecord()) {
         if (centralWindow->haveNewData()) {
             controller->insertRecord(centralWindow->getFieldModified());
-            centralWindow->clear();
-            centralWindow->lock();
         }
         else
             //TODO testo intelligente
@@ -31,7 +29,6 @@ void MainWindow::saveToModel() {
     }
     else {
         controller->modifyRecord(centralWindow->getFieldModified());
-        centralWindow->lock();
     }
 }
 
@@ -60,6 +57,11 @@ void MainWindow::showImu() {
     }
     else
         showWarning("Non e' stato selezionato alcun bene immobile!");
+}
+
+void MainWindow::newInsert() {
+    controller->resetActualRecord();
+    centralWindow->newInsert();
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
@@ -110,7 +112,6 @@ void MainWindow::updateView() {
         }
         centralWindow->updateField(f,comune,foglio,particella,proprietario,rendita,classe,primaCasa,storico,inagibile);
     }
-    centralWindow->lock();
 }
 
 void MainWindow::showWarning(const QString& x) {
@@ -119,6 +120,14 @@ void MainWindow::showWarning(const QString& x) {
 
 void MainWindow::showStatus(const QString& x, int y) {
     statusBar()->showMessage(x,y);
+}
+
+void MainWindow::clearField() const {
+    centralWindow->clear();
+}
+
+void MainWindow::lockField() const {
+    centralWindow->lock();
 }
 
 void MainWindow::startSearch() {

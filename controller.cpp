@@ -9,6 +9,10 @@ Record* Controller::getActualRecord() const {
     return actualRecord;
 }
 
+void Controller::resetActualRecord() {
+    actualRecord=0;
+}
+
 void Controller::searchRecord(QHash<QString,QString>* x) {
     string comune=x->value("comune").toStdString();
     int foglio=x->value("foglio").toInt();
@@ -18,6 +22,7 @@ void Controller::searchRecord(QHash<QString,QString>* x) {
     Container<Record>::Iterator it=model->FindItem(r);
     actualRecord=*it;
     view->updateView();
+    view->lockField();
     if (!it)
         view->showWarning("La ricerca non ha prodotto risultati");
 }
@@ -50,8 +55,19 @@ void Controller::insertRecord(QHash<QString,QString>* x) {
         newRecord=new Terreno(comune,foglio,parti,prop,rendita);
     }
     Record r(newRecord);
-    model->AddItem(r);
-    view->showStatus("Bene inserito");
+    Container<Record>::Iterator it=model->FindItem(r);
+    if (it) {
+        view->showWarning("Il bene che si sta tentando di inserire e' gia presente");
+        actualRecord=*it;
+        view->updateView();
+        view->lockField();
+    }
+    else {
+        model->AddItem(r);
+        view->showStatus("Bene inserito");
+        view->clearField();
+        view->lockField();
+    }
 }
 
 void Controller::modifyRecord(QHash<QString,QString>* x) {
@@ -76,6 +92,8 @@ void Controller::modifyRecord(QHash<QString,QString>* x) {
         else
             f->setInagibile(false);
     }
+    view->showStatus("Bene modificato");
+    view->lockField();
 }
 
 void Controller::deleteRecord() {
@@ -83,6 +101,7 @@ void Controller::deleteRecord() {
         model->RemoveItem(*actualRecord);
         actualRecord=0;
         view->updateView();
+        view->lockField();
         view->showStatus("Bene eliminato");
     }
 }

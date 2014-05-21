@@ -42,8 +42,8 @@ public:
     void lock() const;
     void unlock() const;
     bool haveNewData() const;
-public slots:
     void newInsert();
+public slots:
     void modify();
 };
 

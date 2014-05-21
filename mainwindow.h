@@ -36,6 +36,7 @@ private slots:
     void saveToModel();
     void deleteFromModel();
     void showImu();
+    void newInsert();
 public:
     MainWindow(QWidget* = 0);
     ~MainWindow();
@@ -43,6 +44,8 @@ public:
     void updateView();
     void showWarning(const QString&);
     void showStatus(const QString&,int =2000);
+    void clearField() const;
+    void lockField() const;
 public slots:
     void startSearch();
 };

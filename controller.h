@@ -18,6 +18,7 @@ private:
 public:
     Controller(Container<Record>*, MainWindow*);
     Record* getActualRecord() const;
+    void resetActualRecord();
     void searchRecord(QHash<QString,QString>*);
     void insertRecord(QHash<QString,QString>*);
     void modifyRecord(QHash<QString,QString>*);

@@ -98,7 +98,7 @@ double Fabbricato::calcoloImu() const throw(Error) {
 	else if (CategoriaCatastale=="C1")
 		Rendita*=MoltiplicatoreC1;
 	else
-		throw Error("Categoria catastale non riconosciuta!");
+        throw Error("Classe catastale non riconosciuta!");
 	if (PrimaCasa)
 		return (Rendita*AliquotaAgevolata)/100.0;
 	else

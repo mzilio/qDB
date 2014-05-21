@@ -19,14 +19,17 @@ SearchDialog::SearchDialog(QWidget* parent): QDialog(parent), mainWindow(parent)
     foglioLabel=new QLabel("Foglio");
     partiLabel=new QLabel("Particella");
     comuneEdit=new QLineEdit();
+    comuneEdit->setPlaceholderText("A001-Z999");
     foglioEdit=new QLineEdit();
+    foglioEdit->setPlaceholderText("1 - 9999");
     partiEdit=new QLineEdit();
+    partiEdit->setPlaceholderText("1 - 9999");
     search=new QPushButton("Cerca");
     cancel=new QPushButton("Cancella");
 
     QRegExp comuneExp("^[A-Z]{1}[0-9]{3}$");
-    //TODO chiedere a papà il range per l'int validator
-    QValidator* v1=new QIntValidator(0,1000,this);
+    QRegExp intExp("^[1-9]{1}[0-9]{0,3}$");
+    QValidator* v1=new QRegExpValidator(intExp,this);
     QValidator* v2=new QRegExpValidator(comuneExp,this);
     comuneEdit->setValidator(v2);
     foglioEdit->setValidator(v1);

@@ -15,9 +15,14 @@ void CentralWidget::drawWidget() {
     propLabel=new QLabel("Proprietario",this);
     renditaLabel=new QLabel("Rendita catastale",this);
     comuneEdit=new QLineEdit(this);
+    //TODO trovare una soluzione al contrasto placeholder & focus per comuneEdit
+    comuneEdit->setPlaceholderText("A001 - Z999");
     foglioEdit=new QLineEdit(this);
+    foglioEdit->setPlaceholderText("1 - 9999");
     partiEdit=new QLineEdit(this);
+    partiEdit->setPlaceholderText("1 - 9999");
     propEdit=new QLineEdit(this);
+    propEdit->hasFocus();
     renditaEdit=new QLineEdit(this);
     QGridLayout* grid1=new QGridLayout(this);
     grid1->addWidget(comuneLabel,0,0);
@@ -62,8 +67,8 @@ void CentralWidget::setValidator() {
     QRegExp comuneExp("^[A-Z]{1}[0-9]{3}$");
     QRegExp renditaExp("^\\d*\\W?\\d?\\d?$");
     QRegExp classeExp("^[A-D]{1}[1-9]{1}[0-1]?$");
-    //TODO chiedere a papà il range per l'int validator
-    QValidator* v1=new QIntValidator(0,1000,this);
+    QRegExp intExp("^[1-9]{1}[0-9]{0,3}$");
+    QValidator* v1=new QRegExpValidator(intExp,this);
     QValidator* v2=new QRegExpValidator(renditaExp,this);
     QValidator* v3=new QRegExpValidator(comuneExp,this);
     QValidator* v4=new QRegExpValidator(classeExp,this);
