@@ -10,6 +10,7 @@
 #include <QStatusBar>
 #include <QAction>
 #include <QMessageBox>
+#include <QFileDialog>
 #include "controller.h"
 #include "centralwidget.h"
 #include "searchdialog.h"
@@ -24,6 +25,9 @@ private:
     SearchDialog* searchWindow;
     QMenu* fileMenu;
     QToolBar* toolBar;
+    QAction* newDb;
+    QAction* openDb;
+    QAction* saveDb;
     QAction* newRecord;
     QAction* modifyRecord;
     QAction* saveRecord;
@@ -33,6 +37,8 @@ private:
     void createActions();
     void connectSignalSlot();
 private slots:
+    void newFile();
+    void openFile();
     void saveToModel();
     void deleteFromModel();
     void showImu();

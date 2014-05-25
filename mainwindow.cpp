@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 
 void MainWindow::createActions() {
+    newDb=new QAction("Nuovo",this);
+    openDb=new QAction("Carica",this);
+    saveDb=new QAction("Salva",this);
     newRecord=new QAction("Nuovo",this);
     modifyRecord=new QAction("Modifica",this);
     saveRecord=new QAction("Salva",this);
@@ -10,12 +13,29 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::connectSignalSlot() {
+    connect(newDb,SIGNAL(triggered()),this,SLOT(newFile()));
+    connect(openDb,SIGNAL(triggered()),this,SLOT(openFile()));
+    //TODO connect(saveDb,SIGNAL(triggered()),this,SLOT());
     connect(newRecord,SIGNAL(triggered()),this,SLOT(newInsert()));
+
+    //TODO inutile preparare la schermata per la modifica se non ho selezionato alcun record (creare slot locale che prima controlla)
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
+
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
     connect(deleteRecord,SIGNAL(triggered()),this,SLOT(deleteFromModel()));
     connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));
     connect(calcoloImu,SIGNAL(triggered()),this,SLOT(showImu()));
+}
+
+void MainWindow::newFile() {
+    controller->newFile();
+}
+
+void MainWindow::openFile() {
+    QString fileName=QFileDialog::getOpenFileName(this, "Apri un file qDB", QDir::currentPath(), "File qDB (*.xml)");
+    if (!fileName.isEmpty()) {
+        controller->openFile(fileName);
+    }
 }
 
 void MainWindow::saveToModel() {
@@ -24,8 +44,7 @@ void MainWindow::saveToModel() {
             controller->insertRecord(centralWindow->getFieldModified());
         }
         else
-            //TODO testo intelligente
-            showWarning("Impossibile salvare!\nInserire almeno i dati generali");
+            showWarning("Impossibile salvare!\nInserire almeno i dati generali.");
     }
     else {
         controller->modifyRecord(centralWindow->getFieldModified());
@@ -69,10 +88,10 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     searchWindow = new SearchDialog(this);
     setCentralWidget(centralWindow);
     createActions();
-    fileMenu = menuBar()->addMenu("&File");
-    fileMenu->addAction("&New DB");
-    fileMenu->addAction("&Open DB");
-    fileMenu->addAction("&Save DB");
+    fileMenu = menuBar()->addMenu("DataBase");
+    fileMenu->addAction(newDb);
+    fileMenu->addAction(openDb);
+    fileMenu->addAction(saveDb);
     toolBar = addToolBar("Record");
     toolBar->addAction(newRecord);
     toolBar->addAction(modifyRecord);
