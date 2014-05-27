@@ -15,7 +15,7 @@ void MainWindow::createActions() {
 void MainWindow::connectSignalSlot() {
     connect(newDb,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(openDb,SIGNAL(triggered()),this,SLOT(openFile()));
-    //TODO connect(saveDb,SIGNAL(triggered()),this,SLOT());
+    connect(saveDb,SIGNAL(triggered()),this,SLOT(saveFile()));
     connect(newRecord,SIGNAL(triggered()),this,SLOT(newInsert()));
 
     //TODO inutile preparare la schermata per la modifica se non ho selezionato alcun record (creare slot locale che prima controlla)
@@ -35,6 +35,13 @@ void MainWindow::openFile() {
     QString fileName=QFileDialog::getOpenFileName(this, "Apri un file qDB", QDir::currentPath(), "File qDB (*.xml)");
     if (!fileName.isEmpty()) {
         controller->openFile(fileName);
+    }
+}
+
+void MainWindow::saveFile() {
+    QString fileName=QFileDialog::getSaveFileName(this, "Salva un file qDB", QDir::currentPath(), "File qDB (*.xml)");
+    if (!fileName.isEmpty()) {
+        controller->saveFile(fileName);
     }
 }
 

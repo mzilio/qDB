@@ -1,16 +1,11 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
-#include <iostream>
-using std::ostream;
 
 template <class K> class Container;
-
-template <class K> ostream& operator<<(ostream&, const Container<K>&);
 
 template <class K>
 class Container {
 	friend class Iterator;
-	friend ostream& operator<< <K>(ostream&, const Container<K>&);
 private:
 	class Item {
 	public:
@@ -28,7 +23,6 @@ private:
 public:
 	class Iterator {
 		friend class Container;
-		friend ostream& operator<< <K>(ostream&, const Container<K>&);
 	private:
 		Item* it;
 	public:
@@ -257,16 +251,6 @@ K& Container<K>::operator[](typename Container<K>::Iterator x) const {
 	if (x) return x.it->info;
 }
 
-template <class K>
-ostream& operator<<(ostream& os, const Container<K>& x) {
-	typename Container<K>::Iterator q;
-	q=x.Minimum();
-	while (q.it) {
-		os << q.it->info;
-		++q;
-	}
-	return os;
-}
 #endif
 // modifica
 // in container -> implementare bool operator== che ritorna true se b.size()==c.size() e se ogni elemento di b è uguale al corrispondente elemento di c

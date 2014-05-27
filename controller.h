@@ -26,6 +26,7 @@ public:
     void resetActualRecord();
     void newFile();
     void openFile(const QString&);
+    void saveFile(const QString&);
     void searchRecord(QHash<QString,QString>*);
     void insertRecord(QHash<QString,QString>*);
     void modifyRecord(QHash<QString,QString>*);

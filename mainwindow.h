@@ -39,6 +39,7 @@ private:
 private slots:
     void newFile();
     void openFile();
+    void saveFile();
     void saveToModel();
     void deleteFromModel();
     void showImu();

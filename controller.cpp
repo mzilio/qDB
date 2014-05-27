@@ -31,7 +31,7 @@ void Controller::newFile() {
 
 void Controller::openFile(const QString& fileName) {
     QFile file(fileName);
-    file.open(QFile::ReadOnly | QFile::Text);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
     QXmlStreamReader xml(&file);
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
@@ -57,6 +57,33 @@ void Controller::openFile(const QString& fileName) {
         view->showStatus("File caricato");
     }
     file.close();
+}
+
+void Controller::saveFile(const QString& fileName) {
+    if (model->Empty())
+        view->showWarning("Non sono presenti dati da salvare.");
+    else {
+        QFile file(fileName);
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QXmlStreamWriter xml(&file);
+        xml.setAutoFormatting(true);
+        xml.writeStartDocument();
+        xml.writeStartElement("","qDB");
+        Container<Record>::Iterator it=model->Minimum();
+        while (it) {
+            xml.writeStartElement("","record");
+            xml.writeTextElement("","comune",QString::fromStdString((**it)->getIdentificativoCatastale().getComune()));
+            xml.writeTextElement("","foglio",QString::number((**it)->getIdentificativoCatastale().getFoglio()));
+            xml.writeTextElement("","parti",QString::number((**it)->getIdentificativoCatastale().getParticella()));
+            xml.writeTextElement("","prop",QString::fromStdString((**it)->getProprietario()));
+            xml.writeTextElement("","rendita",QString::number((**it)->getRenditaCatastale()));
+            xml.writeEndElement();
+            ++it;
+        }
+        xml.writeEndElement();
+        xml.writeEndDocument();
+        file.close();
+    }
 }
 
 void Controller::searchRecord(QHash<QString,QString>* x) {
