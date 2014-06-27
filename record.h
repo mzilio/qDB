@@ -18,4 +18,5 @@ public:
 	const BeneImmobile& operator*() const;
 	const BeneImmobile* operator->() const;
 };
+
 #endif

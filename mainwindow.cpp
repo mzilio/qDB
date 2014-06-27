@@ -17,10 +17,7 @@ void MainWindow::connectSignalSlot() {
     connect(openDb,SIGNAL(triggered()),this,SLOT(openFile()));
     connect(saveDb,SIGNAL(triggered()),this,SLOT(saveFile()));
     connect(newRecord,SIGNAL(triggered()),this,SLOT(newInsert()));
-
-    //TODO inutile preparare la schermata per la modifica se non ho selezionato alcun record (creare slot locale che prima controlla)
     connect(modifyRecord,SIGNAL(triggered()),centralWindow,SLOT(modify()));
-
     connect(saveRecord,SIGNAL(triggered()),this,SLOT(saveToModel()));
     connect(deleteRecord,SIGNAL(triggered()),this,SLOT(deleteFromModel()));
     connect(searchRecord,SIGNAL(triggered()),searchWindow,SLOT(exec()));

@@ -24,4 +24,5 @@ public:
 	void setRenditaCatastale(double);
 	virtual double calcoloImu() const =0;
 };
+
 #endif

@@ -1,16 +1,14 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-
-#include <string>
-#include <QXmlStreamReader>
+#include "mainwindow.h"
 #include "container.h"
 #include "record.h"
-#include "mainwindow.h"
 #include "fabbricato.h"
 #include "terreno.h"
-#include <iostream>
-using std::cout;
-using std::endl;
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+#include <string>
+using std::string;
 
 class MainWindow;
 

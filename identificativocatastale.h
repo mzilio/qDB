@@ -17,4 +17,5 @@ public:
 	int getFoglio() const;
 	int getParticella() const;
 };
+
 #endif

@@ -24,18 +24,6 @@ Fabbricato::Fabbricato(string co, int f, int pa, string pr, double r, string c, 
 		Inagibile=true;
 }
 
-/*bool Fabbricato::operator==(const BeneImmobile& b) const {
-	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
-	return f && BeneImmobile::operator==(*f);
-	//return f && BeneImmobile::operator==(*f) && CategoriaCatastale==f->CategoriaCatastale;
-}
-
-bool Fabbricato::operator<(const BeneImmobile& b) const {
-	const Fabbricato* f=dynamic_cast<const Fabbricato*>(&b);
-	return f && BeneImmobile::operator<(*f);
-	//return f && BeneImmobile::operator<(*f) && CategoriaCatastale<f->CategoriaCatastale;
-}*/
-
 Fabbricato* Fabbricato::clone() const {
 	return new Fabbricato(*this);
 }
@@ -104,6 +92,3 @@ double Fabbricato::calcoloImu() const throw(Error) {
 	else
 		return (Rendita*AliquotaStandard)/100.0;
 }
-/*
-	TODO capire come fare controllo di coerenza su categoria catastale all'interno del costruttore
-*/

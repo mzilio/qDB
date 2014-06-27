@@ -10,4 +10,5 @@ public:
 	Terreno* clone() const;
 	double calcoloImu() const;
 };
+
 #endif

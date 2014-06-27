@@ -15,7 +15,6 @@ void CentralWidget::drawWidget() {
     propLabel=new QLabel("Proprietario",this);
     renditaLabel=new QLabel("Rendita catastale",this);
     comuneEdit=new QLineEdit(this);
-    //TODO trovare una soluzione al contrasto placeholder & focus per comuneEdit
     comuneEdit->setPlaceholderText("A001 - Z999");
     foglioEdit=new QLineEdit(this);
     foglioEdit->setPlaceholderText("1 - 9999");
@@ -47,7 +46,6 @@ void CentralWidget::drawWidget() {
     QGridLayout* grid2=new QGridLayout();
     grid2->addWidget(classeLabel,0,0);
     grid2->addWidget(classeEdit,0,1,1,2);
-    //TODO gestire intelligentemente le agevolazioni
     grid2->addWidget(primaCasa,1,0);
     grid2->addWidget(storico,1,1);
     grid2->addWidget(inagibile,1,2);

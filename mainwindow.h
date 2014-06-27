@@ -1,6 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QTableView>
@@ -56,4 +55,5 @@ public:
 public slots:
     void startSearch();
 };
+
 #endif // MAINWINDOW_H

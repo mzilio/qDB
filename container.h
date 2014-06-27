@@ -1,8 +1,6 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-template <class K> class Container;
-
 template <class K>
 class Container {
 	friend class Iterator;
@@ -252,5 +250,3 @@ K& Container<K>::operator[](typename Container<K>::Iterator x) const {
 }
 
 #endif
-// modifica
-// in container -> implementare bool operator== che ritorna true se b.size()==c.size() e se ogni elemento di b è uguale al corrispondente elemento di c

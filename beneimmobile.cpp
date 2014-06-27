@@ -8,7 +8,6 @@ BeneImmobile::~BeneImmobile() {}
 
 bool BeneImmobile::operator==(const BeneImmobile& b) const {
 	return id==b.id;
-	//return id==b.id && Proprietario==b.Proprietario && RenditaCatastale==b.RenditaCatastale;
 }
 
 bool BeneImmobile::operator!=(const BeneImmobile& b) const {
@@ -17,7 +16,6 @@ bool BeneImmobile::operator!=(const BeneImmobile& b) const {
 
 bool BeneImmobile::operator<(const BeneImmobile& b) const {
 	return id<b.id;
-	//return id<b.id && Proprietario<b.Proprietario && RenditaCatastale<b.RenditaCatastale;
 }
 
 IdentificativoCatastale BeneImmobile::getIdentificativoCatastale() const {
