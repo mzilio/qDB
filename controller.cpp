@@ -77,12 +77,29 @@ void Controller::saveFile(const QString& fileName) {
             xml.writeTextElement("","parti",QString::number((**it)->getIdentificativoCatastale().getParticella()));
             xml.writeTextElement("","prop",QString::fromStdString((**it)->getProprietario()));
             xml.writeTextElement("","rendita",QString::number((**it)->getRenditaCatastale()));
+            Fabbricato* f=dynamic_cast<Fabbricato*>(&(***it));
+			if (f) {
+				xml.writeTextElement("","classe",QString::fromStdString(f->getCategoriaCatastale()));
+                if (f->isPrimaCasa())
+                    xml.writeTextElement("","primaCasa","true");
+                else
+                    xml.writeTextElement("","primaCasa","false");
+                if (f->isStorico())
+                    xml.writeTextElement("","storico","true");
+                else
+                    xml.writeTextElement("","storico","false");
+                if (f->isInagibile())
+                    xml.writeTextElement("","inagibile","true");
+                else
+                    xml.writeTextElement("","inagibile","false");
+			}
             xml.writeEndElement();
             ++it;
         }
         xml.writeEndElement();
         xml.writeEndDocument();
         file.close();
+        view->showStatus("File salvato");
     }
 }
 
